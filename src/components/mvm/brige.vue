@@ -65,17 +65,8 @@
 
   <n-alert title="注意" type="warning">
     <p>1. mvm 中初次使用的资产, 是无法搜索到的</p>
-    <p>2. 无法搜索到的资产, 请先点击添加资产, 给 mvm 合约转账后, 成功后稍等一会再点击搜索. (资产不会自动退回, 在您的MVM账户合约地址, 需要手动调用 claim 来退回)</p>
+    <p>2. 无法搜索到的资产, 请先点击添加资产, 给 mvm 合约转账后, 成功后稍等一会再点击搜索. (资产会自动退回)</p>
   </n-alert>
-
-  <div class="space">
-    <h3>claim</h3>
-    <n-input-group>
-      <n-input v-model:value="claimAddress" placeholder="请输入资产合约地址" />
-      <n-button type="primary" ghost @click="clickClaim">获取转账二维码</n-button>
-    </n-input-group>
-  </div>
-
   <qrcode v-if="showTxCode" :tx="tx" :show-modal="showTxCode" @close="closeTxCode" />
 </template>
 
@@ -231,31 +222,4 @@ function showTxCodeModal(_tx: TransactionInput) {
 function closeTxCode() {
   showTxCode.value = false
 }
-// ----- claim
-const claimAddress = ref('')
-const clickClaim = async () => {
-  loading.start()
-  try {
-    const extra = extraGeneratByInfo(
-      RegistryAddress,
-      'claim',
-      ['address', 'uint256'],
-      [claimAddress.value, 1]
-    )
-    const tx = getMvmTransaction({
-      asset: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
-      amount: '0.00000001',
-      extra,
-      trace: MixinClient.newUUID(),
-      process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
-    })
-    showTxCodeModal(tx)
-    loading.finish()
-  } catch (e: any) {
-    message.error(e.message)
-    loading.error()
-  }
-}
-
-
 </script>
