@@ -33,6 +33,14 @@ const clickGenerateExtra = () => {
   extraRes.value = extra.toLowerCase()
 }
 
+const extraUnlimitRes = ref('')
+
+const clickGenerateUnlimitExtra = () => {
+  const res = utils.keccak256('0x' + extraRes.value).slice(2)
+  extraUnlimitRes.value = process.value.replaceAll('-', '') + res
+}
+
+
 const emptyInput = {
   asset: '',
   amount: '',
@@ -80,7 +88,17 @@ const clickGenerateTxInput = () => {
     <n-button ghost @click="extraGen = testParams">填入测试数据</n-button>
     <n-button ghost @click="extraGen = JSON.parse(JSON.stringify(emptyExtra))">清空数据</n-button>
     <n-button type="primary" ghost @click="clickGenerateExtra">生成参数</n-button>
-    <n-input v-if="extraRes" v-model:value="extraRes" type="textarea" class="abi-text" />
+    <template v-if="extraRes">
+      <n-input v-model:value="extraRes" type="textarea" class="abi-text" />
+      <h3>通过真实extra 生成无限参数的extra(需要手动writeParams)</h3>
+      <n-button type="primary" ghost @click="clickGenerateUnlimitExtra">生成无限参数的extra</n-button>
+      <n-input
+        v-if="extraUnlimitRes"
+        v-model:value="extraUnlimitRes"
+        type="textarea"
+        class="abi-text"
+      />
+    </template>
   </div>
   <div class="space" v-if="extraRes"></div>
 
