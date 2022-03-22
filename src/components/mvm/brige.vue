@@ -24,7 +24,7 @@
 
   <div class="space">
     <h3>跨链转账</h3>
-    <n-input v-model:value="transfer.contract" placeholder="请输入资产合约地址" />
+    <n-input v-model:value="transfer.asset_id" placeholder="请输入资产asset_id" />
     <n-input-group>
       <n-input v-model:value="transfer.amount" placeholder="请输入要转账的金额" />
       <n-button type="primary" ghost @click="clickTransfer">获取转账二维码</n-button>
@@ -34,7 +34,7 @@
   <n-alert title="注意" type="warning">
     <p>1. 跨链转账之前请先绑定账户</p>
     <p>2. 获取转账二维码然后用 mixin 扫码支付 (要跟上一步扫码的 mixin 是同一个用户, 请不要更换用户扫码.)</p>
-    <p>3. 资产合约地址请在下方的输入框中输入 资产的 asset_id 或者 symbol 来获取. 如: CNB的 asset_id 为:[965e5c6e-434c-3fa9-b780-c50f43cd955c], symbol 为: [CNB]</p>
+    <p>3. 请先确认资产合约地址存在, 请在下方的输入框中输入 资产的 asset_id 或者 symbol 来获取. 如: CNB的 asset_id 为:[965e5c6e-434c-3fa9-b780-c50f43cd955c], symbol 为: [CNB]</p>
     <p>4. 转账成功后, 稍等片刻, 就会在账户中显示了.(首次转入资产, 需要在钱包中导入资产合约地址)</p>
     <p>5. 如果需要转回 mixin messenger 直接在下方根据 user_id 或者 mixin id 搜索您的合约地址, 然后直接通过钱包给该合约地址转账, 您的 messenger 就会收到指定资产了.</p>
   </n-alert>
@@ -75,29 +75,19 @@
       <n-button type="primary" ghost @click="clickClaim">获取转账二维码</n-button>
     </n-input-group>
   </div>
-  <n-modal v-model:show="showModal">
-    <n-card
-      style="width: 600px"
-      title="请使用 Mixin Messenger 扫码"
-      :bordered="false"
-      size="huge"
-      role="dialog"
-      aria-modal="true"
-    >
-      <canvas ref="codeRef" style="width:300px;height:300px" />
-    </n-card>
-  </n-modal>
+
+  <qrcode v-if="showTxCode" :tx="tx" :show-modal="showTxCode" @close="closeTxCode" />
 </template>
 
 <script setup lang="ts">
-import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert, NModal, NCard } from 'naive-ui'
-import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGeneratByInfo } from 'mixin-node-sdk'
-import { nextTick, reactive, ref } from 'vue';
+import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui'
+import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGeneratByInfo, TransactionInput } from 'mixin-node-sdk'
+import { reactive, ref } from 'vue';
 import { MixinClient } from '../../ethers/mixin'
 import { parse } from 'uuid'
-import Qrious from 'qrious'
 import { BridgeAddress, RegistryAddress } from './statistic';
 import { BigNumber } from 'BigNumber.js'
+import qrcode from '@/components/qrcode.vue';
 
 const loading = useLoadingBar()
 const message = useMessage()
@@ -120,33 +110,37 @@ const clickBind = async () => {
     asset: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
     amount: '0.00000001',
     extra,
-    trace: MixinClient.newUUID()
+    trace: MixinClient.newUUID(),
+    process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
   })
-  await showTxCodeModal(tx)
+  showTxCodeModal(tx)
   loading.finish()
 }
 
 // 跨链转账
 const transfer = reactive({
-  contract: '',
+  asset_id: '',
   amount: ''
 })
 
 const clickTransfer = async () => {
   loading.start()
+  const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress)
   const extra = extraGeneratByInfo(
     BridgeAddress,
     'deposit',
     ['address', 'uint256'],
-    [transfer.contract, new BigNumber(transfer.amount).times(1e8).toString()]
+    [contract, new BigNumber(transfer.amount).times(1e8).toString()]
   )
+  console.log(extra)
   const tx = getMvmTransaction({
-    asset: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
+    asset: transfer.asset_id,
     amount: transfer.amount,
     extra,
-    trace: MixinClient.newUUID()
+    trace: MixinClient.newUUID(),
+    process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
   })
-  await showTxCodeModal(tx)
+  showTxCodeModal(tx)
   loading.finish()
 }
 
@@ -168,7 +162,7 @@ const clickSearch = async (type: string) => {
       const u = await MixinClient.readUser(user.search)
       if (!u.user_id)
         throw new Error('用户不存在')
-      const userContract = await getContractByUserIDs(u.user_id)
+      const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
       console.log(userContract)
       if (userContract === nullAddress)
         throw new Error('用户未注册, 请先完成注册')
@@ -176,7 +170,7 @@ const clickSearch = async (type: string) => {
     }
     if (type === 'asset') {
       let asset_id = await getAssetIDBySearch()
-      const assetContract = await getContractByAssetID(asset_id)
+      const assetContract = await getContractByAssetID(asset_id, RegistryAddress)
       if (assetContract === nullAddress)
         throw new Error('资产未注册, 请先添加资产')
       asset.res = assetContract
@@ -198,10 +192,11 @@ const clickAddAsset = async () => {
       asset,
       amount: '0.00000001',
       extra: '',
-      trace: MixinClient.newUUID()
+      trace: MixinClient.newUUID(),
+      process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
     })
 
-    await showTxCodeModal(txInput)
+    showTxCodeModal(txInput)
     loading.finish()
   } catch (e: any) {
     message.error(e.message)
@@ -226,18 +221,16 @@ const getAssetIDBySearch = async (): Promise<string> => {
 
 
 // -------- 二维码相关
-const codeRef = ref(null)
-const showModal = ref(false)
-// 获取转账二维码
-const showTxCodeModal = async (tx: any) => {
-  const { code_id } = await MixinClient.verifyPayment(tx)
-  showModal.value = true
-  nextTick(() => new Qrious({
-    element: codeRef.value,
-    value: 'mixin://codes/' + code_id,
-  }))
+const showTxCode = ref(false)
+const tx = ref<TransactionInput>()
+function showTxCodeModal(_tx: TransactionInput) {
+  tx.value = _tx
+  showTxCode.value = true
 }
 
+function closeTxCode() {
+  showTxCode.value = false
+}
 // ----- claim
 const claimAddress = ref('')
 const clickClaim = async () => {
@@ -253,9 +246,10 @@ const clickClaim = async () => {
       asset: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
       amount: '0.00000001',
       extra,
-      trace: MixinClient.newUUID()
+      trace: MixinClient.newUUID(),
+      process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
     })
-    await showTxCodeModal(tx)
+    showTxCodeModal(tx)
     loading.finish()
   } catch (e: any) {
     message.error(e.message)

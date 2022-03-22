@@ -7,7 +7,7 @@ specifiers:
   '@vue/compiler-sfc': ^3.0.0
   core-js: ^3.6.5
   ethers: ^5.6.1
-  mixin-node-sdk: 3.0.21
+  mixin-node-sdk: 3.0.22
   naive-ui: ^2.26.4
   qrious: ^4.0.2
   typescript: ~4.1.5
@@ -17,7 +17,7 @@ specifiers:
 dependencies:
   core-js: registry.npmmirror.com/core-js/3.21.1
   ethers: 5.6.1
-  mixin-node-sdk: 3.0.21
+  mixin-node-sdk: 3.0.22
   naive-ui: 2.26.4_vue@3.2.31
   qrious: 4.0.2
   vue: registry.npmmirror.com/vue/3.2.31
@@ -1369,8 +1369,8 @@ packages:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: true
 
-  /mixin-node-sdk/3.0.21:
-    resolution: {integrity: sha512-PwxumxDa5RQuKZO0nAIoUgaaARkI8ShxxfBcJhaAsix7SmjgHacmmj9U87xnk7wsRVZr4nxBlXbZvs5m/3txtA==}
+  /mixin-node-sdk/3.0.22:
+    resolution: {integrity: sha512-yNbCwMZlc5+1pW+iPKWxYc5KDw3jAugxUjMH8ofpq5/FOF8BLzryxKY2YFKeUVj7l2WVMVBfbXZg6DCia42Pqg==}
     engines: {node: '>=10'}
     dependencies:
       '@types/axios': 0.14.0
@@ -4710,12 +4710,6 @@ packages:
       - supports-color
     dev: true
 
-  registry.npmmirror.com/balanced-match/1.0.2:
-    resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/balanced-match/-/balanced-match-1.0.2.tgz}
-    name: balanced-match
-    version: 1.0.2
-    dev: true
-
   registry.npmmirror.com/base/0.11.2:
     resolution: {integrity: sha512-5T6P4xPgpp0YDFvSWwEZ4NoE3aM4QBQXDzmVbraCkFj8zHM+mba8SyqB5DbZWyR7mYHo6Y7BdQo3MoA4m0TeQg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/base/-/base-0.11.2.tgz}
     name: base
@@ -4852,8 +4846,8 @@ packages:
     name: brace-expansion
     version: 1.1.11
     dependencies:
-      balanced-match: registry.npmmirror.com/balanced-match/1.0.2
-      concat-map: registry.npmmirror.com/concat-map/0.0.1
+      balanced-match: 1.0.2
+      concat-map: 0.0.1
     dev: true
 
   registry.npmmirror.com/braces/2.3.2:
@@ -5464,12 +5458,6 @@ packages:
       on-headers: registry.npmmirror.com/on-headers/1.0.2
       safe-buffer: registry.npmmirror.com/safe-buffer/5.1.2
       vary: registry.npmmirror.com/vary/1.1.2
-    dev: true
-
-  registry.npmmirror.com/concat-map/0.0.1:
-    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/concat-map/-/concat-map-0.0.1.tgz}
-    name: concat-map
-    version: 0.0.1
     dev: true
 
   registry.npmmirror.com/concat-stream/1.6.2:

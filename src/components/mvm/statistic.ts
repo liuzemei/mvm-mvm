@@ -1,13 +1,15 @@
 
-export const FactoryAddress = '0x4D89f6dF1f5e964AC2c54a83a0b5a39cF28d07F8'
+export const FactoryAddress = '0x9e7Ee16C8D995A792bD7113A770D20aD62Cd8905'
 
-export const RouterAddress = `0x52F92Be9f866d179a15E0bC44643cA837A059368`
+export const RouterAddress = `0x6039F5B308cA3eF7F503d945ee44140D5c15e585`
 
-export const MVMRouterAddress = `0x0457A5Fa88C41522d67D690B675611A149dCeD04`
+export const MVMRouterAddress = `0xF138899B87C72267EfCf95F6Dd926683F61F4f58`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
-export const RegistryAddress = `0x853053Ee2BDfCF4b31CBa171B40E126eC98ee65d`
+export const RegistryAddress = `0x525a99d3269E0D204f97b53e08e39cAD76EbF8f7`
+
+export const CNBAddress = `0xeb0393eb61c1f6605206289729f7Cfc76be4bDda`
 
 export const FactoryABI = [
   {
@@ -21,19 +23,6 @@ export const FactoryABI = [
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "constructor"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": true,
-        "internalType": "bytes32",
-        "name": "hash",
-        "type": "bytes32"
-      }
-    ],
-    "name": "InitCode",
-    "type": "event"
   },
   {
     "anonymous": false,
@@ -65,6 +54,21 @@ export const FactoryABI = [
     ],
     "name": "PairCreated",
     "type": "event"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "INIT_CODE_PAIR_HASH",
+    "outputs": [
+      {
+        "internalType": "bytes32",
+        "name": "",
+        "type": "bytes32"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
   },
   {
     "constant": true,
@@ -1351,6 +1355,19 @@ export const RegistryABI = [
     "anonymous": false,
     "inputs": [
       {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "name": "Log",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
         "components": [
           {
             "internalType": "uint64",
@@ -1621,6 +1638,44 @@ export const RegistryABI = [
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "params",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "id",
+        "type": "uint256"
+      }
+    ],
+    "name": "readParams",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -1635,6 +1690,25 @@ export const RegistryABI = [
       }
     ],
     "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "raw",
+        "type": "bytes"
+      }
+    ],
+    "name": "writeParams",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

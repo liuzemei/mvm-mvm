@@ -33,18 +33,17 @@
 <script setup lang="ts">
 import { NInput, NButton, NSelect, NInputGroup, useLoadingBar } from 'naive-ui'
 import { computed, onMounted, ref, watch } from 'vue'
-import { abiTestData, contarctTestData } from './testData'
-import { RegistryABI, RegistryAddress } from '../mvm/statistic'
+import { RegistryABI, RegistryAddress, MVMRouterABI, MVMRouterAddress, CNBAddress } from '../mvm/statistic'
 import { ABI } from '@/types'
 import { getContract } from '@/ethers';
-const abi = ref(JSON.stringify(abiTestData))
-const contractAddress = ref(contarctTestData)
+const abi = ref(JSON.stringify(MVMRouterABI))
+const contractAddress = ref(MVMRouterAddress)
 const loading = useLoadingBar()
 
 const clickFull = (type: string) => {
   if (type === 'uniswap') {
-    abi.value = JSON.stringify(abiTestData)
-    contractAddress.value = contarctTestData
+    abi.value = JSON.stringify(MVMRouterABI)
+    contractAddress.value = MVMRouterAddress
   }
   if (type === 'registry') {
     abi.value = JSON.stringify(RegistryABI)
@@ -58,9 +57,8 @@ const clickClean = () => {
 }
 
 const clickFill = () => {
-  selectItem.value[0].value = "0xD630070B7a1fE4121A1B919947532493F6Cc907f"
+  selectItem.value[0].value = CNBAddress
   selectItem.value[1].value = "0"
-
 }
 
 const selectFunc = ref('')
@@ -115,8 +113,7 @@ const clickExec = async () => {
 
 async function execContract(abi: string, address: string, method: string, args: any[]): Promise<string> {
   const t = await getContract(address, abi)
-  // return ""
-  return await t[method](...args)
+  return t[method](...args)
 }
 console.log(JSON.parse(abi.value))
 
