@@ -56,7 +56,6 @@ const clickGenerateTxInput = () => {
     trace: MixinClient.newUUID(),
     process: process.value
   })
-  console.log(tx.value)
   showQrcode.value = true
 }
 
@@ -112,5 +111,5 @@ const clickGenerateTxInput = () => {
     <n-button type="primary" ghost @click="clickGenerateTxInput">生成二维码</n-button>
   </div>
 
-  <Qrcode :show-modal="showQrcode" :tx="tx" />
+  <Qrcode :show-modal="showQrcode" :tx="tx" @close="() => showQrcode = false" />
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <n-modal v-model:show="showModal" :onClose="() => emit('close')">
+  <n-modal :show="props.showModal" @mask-click="() => emit('close')" @esc="() => emit('close')">
     <n-card
       style="width: 600px"
       title="请使用 Mixin Messenger 扫码"
@@ -34,14 +34,10 @@ const props = defineProps({
 
 const emit = defineEmits<{ (e: 'close'): void }>()
 
-
 // -------- 二维码相关
 const codeRef = ref(null)
 // 获取转账二维码
-
 watch(() => props.showModal, async (o, n) => {
-  console.log(1232)
-  console.log(o, n)
   if (o) {
     loading.start()
     const { code_id } = await MixinClient.verifyPayment(props.tx as TransactionInput)

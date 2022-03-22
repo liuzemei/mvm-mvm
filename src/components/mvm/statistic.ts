@@ -1,9 +1,9 @@
 
-export const FactoryAddress = '0x9e7Ee16C8D995A792bD7113A770D20aD62Cd8905'
+export const FactoryAddress = '0xBcA0f5698AECe555F7EbBFc42EF3ebfE71f960eE'
 
-export const RouterAddress = `0x6039F5B308cA3eF7F503d945ee44140D5c15e585`
+export const RouterAddress = `0xe4aeAc26BCd161aFAEea468AC22F45FE5a35737F`
 
-export const MVMRouterAddress = `0xF138899B87C72267EfCf95F6Dd926683F61F4f58`
+export const MVMRouterAddress = `0x0ADea2bd305d21660e8ccA7f0BA124E4c09d4AF7`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
