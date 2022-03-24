@@ -74,9 +74,9 @@
 import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui'
 import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGeneratByInfo, TransactionInput } from 'mixin-node-sdk'
 import { reactive, ref } from 'vue';
-import { MixinClient } from '../../ethers/mixin'
+import { MixinClient } from '@/ethers/mixin'
 import { parse } from 'uuid'
-import { BridgeAddress, RegistryAddress } from './statistic';
+import { BridgeAddress, CNBAmount, CNBAssetID, RegistryAddress, RegistryProcess } from '@/assets/statistic';
 import { BigNumber } from 'BigNumber.js'
 import qrcode from '@/components/qrcode.vue';
 
@@ -98,11 +98,11 @@ const clickBind = async () => {
     [bind.value]
   )
   const tx = getMvmTransaction({
-    asset: '965e5c6e-434c-3fa9-b780-c50f43cd955c',
-    amount: '0.00000001',
+    asset: CNBAssetID,
+    amount: CNBAmount,
     extra,
     trace: MixinClient.newUUID(),
-    process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
+    process: RegistryProcess
   })
   showTxCodeModal(tx)
   loading.finish()
@@ -129,7 +129,7 @@ const clickTransfer = async () => {
     amount: transfer.amount,
     extra,
     trace: MixinClient.newUUID(),
-    process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
+    process: RegistryProcess
   })
   showTxCodeModal(tx)
   loading.finish()
@@ -184,7 +184,7 @@ const clickAddAsset = async () => {
       amount: '0.00000001',
       extra: '',
       trace: MixinClient.newUUID(),
-      process: '69a49d6a-cf84-3c82-87ff-89be937647ee'
+      process: RegistryProcess
     })
 
     showTxCodeModal(txInput)

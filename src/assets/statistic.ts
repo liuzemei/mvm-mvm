@@ -3,11 +3,13 @@ export const FactoryAddress = '0xBcA0f5698AECe555F7EbBFc42EF3ebfE71f960eE'
 
 export const RouterAddress = `0xe4aeAc26BCd161aFAEea468AC22F45FE5a35737F`
 
-export const MVMRouterAddress = `0x0ADea2bd305d21660e8ccA7f0BA124E4c09d4AF7`
+export const MVMRouterAddress = `0x0ae0f7968AaadC24f365D184C7D873F03663c607`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
 export const RegistryAddress = `0x525a99d3269E0D204f97b53e08e39cAD76EbF8f7`
+
+export const RegistryProcess = `69a49d6a-cf84-3c82-87ff-89be937647ee`
 
 export const CNBAddress = `0xeb0393eb61c1f6605206289729f7Cfc76be4bDda`
 
@@ -1712,3 +1714,6 @@ export const RegistryABI = [
     "type": "function"
   }
 ]
+
+export const CNBAssetID = '965e5c6e-434c-3fa9-b780-c50f43cd955c'
+export const CNBAmount = '0.00000001'

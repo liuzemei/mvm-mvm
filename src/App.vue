@@ -1,11 +1,3 @@
-<script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from '@/components/metamask/index.vue'
-import MVM from '@/components/mvm/index.vue'
-import { NLoadingBarProvider, NMessageProvider, NTabs, NTabPane } from 'naive-ui'
-</script>
-
 <template>
   <n-message-provider>
     <n-loading-bar-provider class="app">
@@ -20,6 +12,13 @@ import { NLoadingBarProvider, NMessageProvider, NTabs, NTabPane } from 'naive-ui
     </n-loading-bar-provider>
   </n-message-provider>
 </template>
+<script setup lang="ts">
+// This starter template is using Vue 3 <script setup> SFCs
+// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
+import HelloWorld from '@/components/metamask/index.vue'
+import MVM from '@/components/mvm/index.vue'
+import { NLoadingBarProvider, NMessageProvider, NTabs, NTabPane } from 'naive-ui'
+</script>
 
 <style>
 * {
