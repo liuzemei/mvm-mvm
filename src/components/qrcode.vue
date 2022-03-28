@@ -15,7 +15,7 @@
 
 
 <script setup lang="ts">
-import { MixinClient } from '@/ethers/mixin';
+import { MixinClient } from '@/services/mixin';
 import { TransactionInput } from 'mixin-node-sdk';
 import { useLoadingBar, NModal, NCard } from 'naive-ui'
 import { nextTick, onMounted, ref, watch } from 'vue'

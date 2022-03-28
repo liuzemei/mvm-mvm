@@ -54,7 +54,7 @@ import { ref } from 'vue';
 import Qrcode from '@/components/qrcode.vue'
 import { NInput, NButton, NAlert } from 'naive-ui'
 import { getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
-import { MixinClient } from '@/ethers/mixin';
+import { MixinClient } from '@/services/mixin';
 import { testParams, testInput } from './testData'
 import { utils } from 'ethers';
 import { RegistryProcess, RegistryAddress } from '@/assets/statistic';

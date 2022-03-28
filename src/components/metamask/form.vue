@@ -35,7 +35,7 @@ import { NInput, NButton, NSelect, NInputGroup, useLoadingBar } from 'naive-ui'
 import { computed, onMounted, ref, watch } from 'vue'
 import { RegistryABI, RegistryAddress, MVMRouterABI, MVMRouterAddress, CNBAddress } from '@/assets/statistic'
 import { ABI } from '@/types'
-import { getContract } from '@/ethers';
+import { getContract } from '@/services/ethers';
 const abi = ref(JSON.stringify(MVMRouterABI))
 const contractAddress = ref(MVMRouterAddress)
 const loading = useLoadingBar()

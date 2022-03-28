@@ -17,7 +17,7 @@
 
 <script setup lang="ts" >
 import { reactive } from 'vue'
-import { formatEth, getSigner } from '@/ethers';
+import { formatEth, getSigner } from '@/services/ethers';
 import { NButton, NRow, NCol, NStatistic, useLoadingBar } from 'naive-ui'
 const loadingBar = useLoadingBar()
 const user = reactive({

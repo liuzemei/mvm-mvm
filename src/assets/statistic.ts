@@ -7,9 +7,9 @@ export const MVMRouterAddress = `0x4dC4e3951F3bA6C8A91d14d91C1d3D82602B996f`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
-export const RegistryAddress = `0x19974CaA7c9af3cE44f963Add158F10E55CD5a59`
+export const RegistryAddress = `0x99D815aBFFB2884169ABB871233C4437515a7E78`
 
-export const RegistryProcess = `6787f06f-8dac-3015-b249-7c6c084ecff6`
+export const RegistryProcess = `a9e7a10e-7c3a-3530-8372-7a081e086205`
 
 export const FactoryABI = [
   {
@@ -1355,19 +1355,6 @@ export const RegistryABI = [
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "name": "Log",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
         "components": [
           {
             "internalType": "uint64",
@@ -1638,44 +1625,6 @@ export const RegistryABI = [
   {
     "inputs": [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "name": "params",
-    "outputs": [
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "id",
-        "type": "uint256"
-      }
-    ],
-    "name": "readParams",
-    "outputs": [
-      {
-        "internalType": "bytes",
-        "name": "",
-        "type": "bytes"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
         "internalType": "address",
         "name": "",
         "type": "address"
@@ -1695,19 +1644,37 @@ export const RegistryABI = [
   {
     "inputs": [
       {
-        "internalType": "bytes",
-        "name": "raw",
-        "type": "bytes"
-      }
-    ],
-    "name": "writeParams",
-    "outputs": [
-      {
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
       }
     ],
+    "name": "values",
+    "outputs": [
+      {
+        "internalType": "bytes",
+        "name": "",
+        "type": "bytes"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_key",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bytes",
+        "name": "raw",
+        "type": "bytes"
+      }
+    ],
+    "name": "writeValue",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   }

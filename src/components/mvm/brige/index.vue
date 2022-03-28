@@ -74,7 +74,7 @@
 import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui'
 import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGeneratByInfo, TransactionInput } from 'mixin-node-sdk'
 import { reactive, ref } from 'vue';
-import { MixinClient } from '@/ethers/mixin'
+import { MixinClient } from '@/services/mixin'
 import { parse } from 'uuid'
 import { BridgeAddress, CNBAmount, CNBAssetID, RegistryAddress, RegistryProcess } from '@/assets/statistic';
 import { BigNumber } from 'BigNumber.js'

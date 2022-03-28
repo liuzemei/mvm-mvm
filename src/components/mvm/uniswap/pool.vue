@@ -37,10 +37,9 @@ import Qrcode from '@/components/qrcode.vue';
 import { extraGeneratByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { getAssetIDByAddress } from 'mixin-node-sdk'
 import { MVMRouterAddress, RegistryAddress, RegistryProcess } from '@/assets/statistic';
-import { MixinClient } from '@/ethers/mixin';
+import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
-import { getRateByAddress } from './tools'
-import { _selectOptions } from './testData'
+import { getAllTokens, getRateByAddress } from './tools'
 
 const loading = useLoadingBar()
 
@@ -75,13 +74,12 @@ const clickAddLiquidity = async (type: 'A' | 'B') => {
 }
 
 onMounted(async () => {
-  // const allTokens = await getAllTokens()
-  selectOptions.value = _selectOptions
+  const allTokens = await getAllTokens()
 
-  // selectOptions.value = Object.values(allTokens).map(token => ({
-  //   label: token.symbol!,
-  //   value: token.address!,
-  // }))
+  selectOptions.value = Object.values(allTokens).map(token => ({
+    label: token.symbol!,
+    value: token.address!,
+  }))
 })
 
 const rate = ref(0)
