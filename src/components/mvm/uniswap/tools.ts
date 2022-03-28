@@ -2,6 +2,7 @@ import { ChainId, Currency, CurrencyAmount, ETHER, JSBI, Pair, Percent, Price, T
 import { abi as IUniswapV2PairABI } from '@uniswap/v2-core/build/IUniswapV2Pair.json'
 import { getContract } from '@/ethers'
 import { BigNumber } from 'bignumber.js'
+import { _selectOptions } from './testData'
 
 export const wrappedCurrency = (currency: Currency | undefined, chainId: ChainId | undefined): Token | undefined =>
   chainId && currency === ETHER ? WETH[chainId] : currency instanceof Token ? currency : undefined
@@ -64,11 +65,9 @@ const getPair = async (addrA: string, addrB: string): Promise<[Token, Token, Pai
 }
 
 const fetchQuorumJson = async (): Promise<{ [address: string]: Token }> => {
-  const res = await fetch(`https://metamask.test.mixinbots.com/quorum.json`)
-  const tokens: Token[] = (await res.json()).tokens
   const result: { [address: string]: Token } = {}
-  tokens.filter((t: Token) => t.chainId === 83927).forEach((t: Token) => {
-    result[t.address] = new Token(t.chainId, t.address, t.decimals, t.symbol, t.name)
+  _selectOptions.forEach(t => {
+    result[t.value] = new Token(83927, t.value, 8, t.label, t.name)
   })
   return result
 }

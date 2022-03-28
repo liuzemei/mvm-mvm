@@ -5,9 +5,9 @@
     <NAlert type="info">
       合约地址:
       <a
-        href="https://testnet.mvmscan.com/address/0x525a99d3269E0D204f97b53e08e39cAD76EbF8f7/transactions"
+        :href="`https://testnet.mvmscan.com/address/${RegistryAddress}/transactions`"
         target="_blank"
-      >0x525a99d3269E0D204f97b53e08e39cAD76EbF8f7</a>
+      >{{ RegistryAddress }}</a>
     </NAlert>
   </div>
 
@@ -57,7 +57,7 @@ import { getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { MixinClient } from '@/ethers/mixin';
 import { testParams, testInput } from './testData'
 import { utils } from 'ethers';
-import { RegistryProcess } from '@/assets/statistic';
+import { RegistryProcess, RegistryAddress } from '@/assets/statistic';
 const process = ref(RegistryProcess)
 
 const showQrcode = ref(false)

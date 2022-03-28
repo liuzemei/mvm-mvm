@@ -3,15 +3,13 @@ export const FactoryAddress = '0xBcA0f5698AECe555F7EbBFc42EF3ebfE71f960eE'
 
 export const RouterAddress = `0xe4aeAc26BCd161aFAEea468AC22F45FE5a35737F`
 
-export const MVMRouterAddress = `0x0ae0f7968AaadC24f365D184C7D873F03663c607`
+export const MVMRouterAddress = `0x4dC4e3951F3bA6C8A91d14d91C1d3D82602B996f`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
-export const RegistryAddress = `0x525a99d3269E0D204f97b53e08e39cAD76EbF8f7`
+export const RegistryAddress = `0x19974CaA7c9af3cE44f963Add158F10E55CD5a59`
 
-export const RegistryProcess = `69a49d6a-cf84-3c82-87ff-89be937647ee`
-
-export const CNBAddress = `0xeb0393eb61c1f6605206289729f7Cfc76be4bDda`
+export const RegistryProcess = `6787f06f-8dac-3015-b249-7c6c084ecff6`
 
 export const FactoryABI = [
   {
