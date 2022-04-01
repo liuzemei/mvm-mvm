@@ -90,8 +90,7 @@ const bind = ref('')
 
 const clickBind = async () => {
   loading.start()
-  // const res = await getContractByUserIDs([address])
-  const extra = extraGeneratByInfo(
+  const extra = '00' + extraGeneratByInfo(
     BridgeAddress,
     'bind',
     ['address'],
@@ -117,13 +116,12 @@ const transfer = reactive({
 const clickTransfer = async () => {
   loading.start()
   const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress)
-  const extra = extraGeneratByInfo(
+  const extra = '00' + extraGeneratByInfo(
     BridgeAddress,
     'deposit',
     ['address', 'uint256'],
     [contract, new BigNumber(transfer.amount).times(1e8).toString()]
   )
-  console.log(extra)
   const tx = getMvmTransaction({
     asset: transfer.asset_id,
     amount: transfer.amount,
@@ -154,7 +152,6 @@ const clickSearch = async (type: string) => {
       if (!u.user_id)
         throw new Error('用户不存在')
       const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
-      console.log(userContract)
       if (userContract === nullAddress)
         throw new Error('用户未注册, 请先完成注册')
       user.res = userContract

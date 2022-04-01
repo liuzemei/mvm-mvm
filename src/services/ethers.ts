@@ -20,3 +20,8 @@ export const signMessage = async (msg: string) => {
   const signer = await getSigner()
   return signer.signMessage(_msg)
 }
+
+export const getMvmContract = async (addr: string, abi: any) => {
+  const provider = new ethers.providers.JsonRpcProvider('https://quorum-testnet.mixin.zone', 83927)
+  return new ethers.Contract(addr, abi, provider)
+}

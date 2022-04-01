@@ -30,7 +30,6 @@ const user = reactive({
 async function clickLogin() {
   loadingBar.start()
   const t = await getSigner()
-  console.log(t)
   const address = await t.getAddress()
   const balanceWei = await t.getBalance()
   const network = await t.provider.getNetwork()

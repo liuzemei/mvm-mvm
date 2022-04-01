@@ -75,9 +75,8 @@ const clickUploadParams = async () => {
     [amountA, amountB, [tokenA, tokenB], userContract, time],
   )
   const key = keccak256(raw)
-  const res = await ApiUploadParams(key, raw)
-  console.log(res)
-  params.value = RegistryProcess.replaceAll('-', '') + key.slice(2)
+  await ApiUploadParams(key, raw)
+  params.value = '01' + key.slice(2)
   message.success('上传成功')
   loading.finish()
 }

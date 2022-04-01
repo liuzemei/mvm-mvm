@@ -3,13 +3,17 @@ export const FactoryAddress = '0xBcA0f5698AECe555F7EbBFc42EF3ebfE71f960eE'
 
 export const RouterAddress = `0xe4aeAc26BCd161aFAEea468AC22F45FE5a35737F`
 
-export const MVMRouterAddress = `0x4dC4e3951F3bA6C8A91d14d91C1d3D82602B996f`
+export const MVMRouterAddress = `0xC85194c93F686406415b60da309d9716CAe101A9`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
-export const RegistryAddress = `0x99D815aBFFB2884169ABB871233C4437515a7E78`
+export const RegistryAddress = `0xCFbc3f96a3334780cd2e6ecF372E2b01f37513F6`
 
-export const RegistryProcess = `a9e7a10e-7c3a-3530-8372-7a081e086205`
+export const RegistryProcess = `880f38ed-e14e-35c0-adb9-cc77c7bc2cc1`
+
+export const CNBAssetID = '965e5c6e-434c-3fa9-b780-c50f43cd955c'
+export const CNBAmount = '0.00000001'
+export const CNBAddress = '0x1476A50AdC1A232ca52694DC6AA86CF2f3087b86'
 
 export const FactoryABI = [
   {
@@ -1680,5 +1684,279 @@ export const RegistryABI = [
   }
 ]
 
-export const CNBAssetID = '965e5c6e-434c-3fa9-b780-c50f43cd955c'
-export const CNBAmount = '0.00000001'
+export const Erc20ABI = [
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Approval",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "owner",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      }
+    ],
+    "name": "allowance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "spender",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "approve",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "who",
+        "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transfer",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "transferFrom",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
+
+export const TokenList = [{
+  "chainId": 83927,
+  "address": "0x452C7AD3CE39101C77d38622f2B304307DC37543",
+  "asset_id": "965e5c6e-434c-3fa9-b780-c50f43cd955c",
+  "name": "Chui Niu Bi",
+  "symbol": "CNB",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/0sQY63dDMkWTURkJVjowWY6Le4ICjAFuu3ANVyZA4uI3UdkbuOT5fjJUT82ArNYmZvVcxDXyNjxoOv0TAYbQTNKS=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0x23e79ccD2F145850042A61d85d0E1287cBe300ba",
+  "asset_id": "66152c0b-3355-38ef-9ec5-cae97e29472a",
+  "name": "NXCoin",
+  "symbol": "NXC",
+  "decimals": 8,
+  "logoURI": "https://images.mixin.one/yH_I5b0GiV2zDmvrXRyr3bK5xusjfy5q7FX3lw3mM2Ryx4Dfuj6Xcw8SHNRnDKm7ZVE3_LvpKlLdcLrlFQUBhds=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0x159E849f74AACd42813AC0822e6639F22C659e02",
+  "asset_id": "c6d0c728-2624-429b-8e0d-d9d19b6592fa",
+  "name": "Bitcoin",
+  "symbol": "BTC",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/HvYGJsV5TGeZ-X9Ek3FEQohQZ3fE9LBEBGcOcn4c4BNHovP4fW4YB97Dg5LcXoQ1hUjMEgjbl1DPlKg1TW7kK6XP=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0xc44878Ff981BAe8d13770326Da5F3ddB0a5C686a",
+  "asset_id": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
+  "name": "EOS",
+  "symbol": "EOS",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/OTwqLjEwc6v0JutJc-1sYkh_juFOvVbFz26WvvwfLGdKq6ZtwAT-wKhX0k-5PsgOK_Pd9rCQjZfwMJmiNXCBzpHnjapBtkCqAVCTCg=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0x9623008Aa7eb30AdcEb0c75708BAbB6f7f1063e3",
+  "asset_id": "f5ef6b5d-cc5a-3d90-b2c0-a2fd386e7a3c",
+  "name": "BOX Token",
+  "symbol": "BOX",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/ml7tg1ZGrQt6IJSvEusWFfthosOB98GWN7r4EkmgSP8tbJHxK7OWki9zfZFFDCDOJE0nlLBR6dc4nbUguXE3Bg4=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0x6C5bf3eCE931C3d5A0F646A515551C4fe1593A26",
+  "asset_id": "c94ac88f-4671-3976-b60a-09064f1811e8",
+  "name": "Mixin",
+  "symbol": "XIN",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/UasWtBZO0TZyLTLCFQjvE_UYekjC7eHCuT_9_52ZpzmCC-X-NPioVegng7Hfx0XmIUavZgz5UL-HIgPCBECc-Ws=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0xe2BBB24Cd1B55B78088EbB8CC598Ed0b3416246D",
+  "asset_id": "43d61dcd-e413-450d-80b8-101d5e903357",
+  "name": "Ether",
+  "symbol": "ETH",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/zVDjOxNTQvVsA8h2B4ZVxuHoCF3DJszufYKWpd9duXUSbSapoZadC7_13cnWBqg0EmwmRcKGbJaUpA8wFfpgZA=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0xB470D5afA83ebafe697D9dC9BAbA3273D62292De",
+  "asset_id": "eea900a8-b327-488c-8d8d-1428702fe240",
+  "name": "MobileCoin",
+  "symbol": "MOB",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/eckqDQi50ZUCoye5mR7y6BvlbXX6CBzkP89BfGNNH6TMNuyXYcCUd7knuIDpV_0W7nT1q3Oo9ooVnMDGjl8-oiENuA5UVREheUu2=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0xC40fa1ebd59dDF51E4747fBCbbD32AfC0A06A631",
+  "asset_id": "4d8c508b-91c5-375b-92b0-ee702ed2dac5",
+  "name": "Tether USD",
+  "symbol": "USDT",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/ndNBEpObYs7450U08oAOMnSEPzN66SL8Mh-f2pPWBDeWaKbXTPUIdrZph7yj8Z93Rl8uZ16m7Qjz-E-9JFKSsJ-F=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0x8bf49b0D721edF49A5d48da63e81Cc215a381460",
+  "asset_id": "31d2ea9c-95eb-3355-b65b-ba096853bc18",
+  "name": "Pando USD",
+  "symbol": "pUSD",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/cH4GWuPXbzeZl6OOunpn7BxE25n3v8URwnNszs0FpZqv3OTlxP1zpzKw89VKTpBwWL-Ned1R36mmy1C4GMuPX1rL-PjfEJ2zby9V=s128"
+},
+{
+  "chainId": 83927,
+  "address": "0x9c4eF7Ad22abdfdA68921DCeeF517bF257Fb3338",
+  "asset_id": "4f2ec12c-22f4-3a9e-b757-c84b6415ea8f",
+  "name": "Quorum Token",
+  "symbol": "RUM",
+  "decimals": 8,
+  "logoURI": "https://mixin-images.zeromesh.net/e_y4q9JIdP1PZbwmwO_6v-fx7_ZyifODuYtHvLQDrkLNwH3pQTDVY0EHZA394gjZawwyt3vPC7NlMvyT2nEuPypeDioV_OMd6T8=s128"
+}]
+
+export const TokenMap: any = {}
+
+TokenList.forEach(token => TokenMap[token.address] = token)

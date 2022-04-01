@@ -82,7 +82,6 @@ const selectList = computed<{ label: string, value: string }[]>(() => {
 })
 const selectItem = ref()
 watch([selectList, abi, selectFunc], (o, v) => {
-  console.log(o)
   if (!selectList.value || !abi.value) return selectItem.value = undefined
   else return selectItem.value = JSON.parse(abi.value)
     .find((v: any) => v.name === selectFunc.value)
@@ -113,9 +112,10 @@ const clickExec = async () => {
 
 async function execContract(abi: string, address: string, method: string, args: any[]): Promise<string> {
   const t = await getContract(address, abi)
-  return t[method](...args)
+  return t[method](...args, {
+    gasLimit: 10000000
+  })
 }
-console.log(JSON.parse(abi.value))
 
 </script>
 <style>

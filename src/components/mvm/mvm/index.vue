@@ -20,19 +20,15 @@
       v-model:value="extraGen.params"
       placeholder="请输入参数. eg: 0xeb0393eb61c1f6605206289729f7Cfc76be4bDda,1"
     />
+    <n-row>
+      <p>是否是 Delegatecall</p>
+      <n-switch v-model:value="isDelegatecall" />
+    </n-row>
     <n-button ghost @click="extraGen = testParams">填入测试数据</n-button>
     <n-button ghost @click="extraGen = JSON.parse(JSON.stringify(emptyExtra))">清空数据</n-button>
-    <n-button type="primary" ghost @click="clickGenerateExtra">生成参数</n-button>
+    <n-button type="primary" ghost @click="clickGenerateExtra" :loading="isGenerate">生成参数</n-button>
     <template v-if="extraRes">
       <n-input v-model:value="extraRes" type="textarea" class="abi-text" />
-      <h3>通过真实extra 生成无限参数的extra(需要手动writeParams)</h3>
-      <n-button type="primary" ghost @click="clickGenerateUnlimitExtra">生成无限参数的extra</n-button>
-      <n-input
-        v-if="extraUnlimitRes"
-        v-model:value="extraUnlimitRes"
-        type="textarea"
-        class="abi-text"
-      />
     </template>
   </div>
   <div class="space" v-if="extraRes"></div>
@@ -52,12 +48,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Qrcode from '@/components/qrcode.vue'
-import { NInput, NButton, NAlert } from 'naive-ui'
+import { NInput, NButton, NAlert, NSwitch, NRow } from 'naive-ui'
 import { getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { MixinClient } from '@/services/mixin';
 import { testParams, testInput } from './testData'
 import { utils } from 'ethers';
-import { RegistryProcess, RegistryAddress } from '@/assets/statistic';
+import { RegistryProcess, RegistryAddress, CNBAssetID, CNBAmount } from '@/assets/statistic';
+import { ApiUploadParams } from '@/services/api';
+import { keccak256 } from 'ethers/lib/utils';
 const process = ref(RegistryProcess)
 
 const showQrcode = ref(false)
@@ -73,8 +71,14 @@ const emptyExtra = {
 const extraGen = ref(emptyExtra)
 const extraRes = ref('')
 
-const clickGenerateExtra = () => {
+const isDelegatecall = ref(false)
+const isGenerate = ref(false)
+const clickGenerateExtra = async () => {
   let { address, method_name, method_type, params } = extraGen.value
+  let op = 0
+  if (isDelegatecall.value) {
+    op = 2
+  }
   if (address.startsWith('0x')) address = address.slice(2)
   let extra = address
   extra = extra + (utils.id(`${method_name}(${method_type})`).slice(2, 10))
@@ -82,14 +86,25 @@ const clickGenerateExtra = () => {
     const abiCoder = new utils.AbiCoder()
     extra += abiCoder.encode(method_type.split(','), params.split(',')).slice(2)
   }
-  extraRes.value = extra.toLowerCase()
-}
-
-const extraUnlimitRes = ref('')
-
-const clickGenerateUnlimitExtra = () => {
-  const res = utils.keccak256('0x' + extraRes.value).slice(2)
-  extraUnlimitRes.value = process.value.replaceAll('-', '') + res
+  extra = extra.toLowerCase()
+  const tx = getMvmTransaction({
+    asset: CNBAssetID,
+    amount: CNBAmount,
+    extra,
+    trace: MixinClient.newUUID(),
+    process: process.value
+  })
+  if (tx.memo!.length > 200) {
+    // 开始上传参数
+    isGenerate.value = true
+    op++
+    const raw = '0x' + extra
+    const key = keccak256(raw)
+    await ApiUploadParams(key, raw)
+    extra = key.slice(2)
+    isGenerate.value = false
+  }
+  extraRes.value = '0' + op + extra
 }
 
 
