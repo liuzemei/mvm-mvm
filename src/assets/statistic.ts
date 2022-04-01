@@ -7,9 +7,9 @@ export const MVMRouterAddress = `0xC85194c93F686406415b60da309d9716CAe101A9`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
-export const RegistryAddress = `0xCFbc3f96a3334780cd2e6ecF372E2b01f37513F6`
+export const RegistryAddress = `0x5237E9eFa0A57D2c415B853ff3A9a4C38Df7b1c8`
 
-export const RegistryProcess = `880f38ed-e14e-35c0-adb9-cc77c7bc2cc1`
+export const RegistryProcess = `e556d3ac-43c7-3355-819e-eda90da40451`
 
 export const CNBAssetID = '965e5c6e-434c-3fa9-b780-c50f43cd955c'
 export const CNBAmount = '0.00000001'
@@ -1859,7 +1859,7 @@ export const Erc20ABI = [
 
 export const TokenList = [{
   "chainId": 83927,
-  "address": "0x452C7AD3CE39101C77d38622f2B304307DC37543",
+  "address": "0xbE48C98736E54c99d92f1616e90FC944Deb64030",
   "asset_id": "965e5c6e-434c-3fa9-b780-c50f43cd955c",
   "name": "Chui Niu Bi",
   "symbol": "CNB",
@@ -1868,7 +1868,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x23e79ccD2F145850042A61d85d0E1287cBe300ba",
+  "address": "0x2c17Ab13D7ff8397772443e5495E9F5472160e6C",
   "asset_id": "66152c0b-3355-38ef-9ec5-cae97e29472a",
   "name": "NXCoin",
   "symbol": "NXC",
