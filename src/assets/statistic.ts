@@ -13,7 +13,7 @@ export const RegistryProcess = `e556d3ac-43c7-3355-819e-eda90da40451`
 
 export const CNBAssetID = '965e5c6e-434c-3fa9-b780-c50f43cd955c'
 export const CNBAmount = '0.00000001'
-export const CNBAddress = '0x1476A50AdC1A232ca52694DC6AA86CF2f3087b86'
+export const CNBAddress = '0xbE48C98736E54c99d92f1616e90FC944Deb64030'
 
 export const FactoryABI = [
   {
