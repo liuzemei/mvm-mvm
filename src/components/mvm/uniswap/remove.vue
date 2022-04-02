@@ -20,12 +20,11 @@
       :loading="btnLoading"
     >获取转账二维码</n-button>
     <n-alert type="info" title="使用教程">
-      <p>1. 选择 tokenA</p>
-      <p>2. 选择 tokenB</p>
-      <p>3. 左侧输入流动性</p>
-      <p>4. 如果右侧可以输入数字, 则说明该交易对流动性未添加, 可以初始化配对金额</p>
-      <p>5. 分别点击左右二维码并完成转账</p>
-      <p>6. 完成流动性添加</p>
+      <p>1. 选择 tokenA, 如(CNB)</p>
+      <p>2. 选择 tokenB, 如(NXC)</p>
+      <p>3. 输入要接收转账的 Mixin ID 如(30265)</p>
+      <p>4. 点击获取转账二维码</p>
+      <p>5. 等待二维码出来后扫码, 即完成移除.</p>
     </n-alert>
   </div>
   <Qrcode :show-modal="showQrcode" :tx="tx" @close="() => showQrcode = false" />
