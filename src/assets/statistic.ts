@@ -2005,7 +2005,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x159E849f74AACd42813AC0822e6639F22C659e02",
+  "address": "0xe2E4137FF1553F2845084E3965E27937674264FC",
   "asset_id": "c6d0c728-2624-429b-8e0d-d9d19b6592fa",
   "name": "Bitcoin",
   "symbol": "BTC",
@@ -2014,7 +2014,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xc44878Ff981BAe8d13770326Da5F3ddB0a5C686a",
+  "address": "0x3d213F6b9F228029922A53366B6D4D4D0a535Abc",
   "asset_id": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
   "name": "EOS",
   "symbol": "EOS",
@@ -2023,7 +2023,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x9623008Aa7eb30AdcEb0c75708BAbB6f7f1063e3",
+  "address": "0x54FbE0BF3973c9105553eC64fe62871Aa00FD5b2",
   "asset_id": "f5ef6b5d-cc5a-3d90-b2c0-a2fd386e7a3c",
   "name": "BOX Token",
   "symbol": "BOX",
@@ -2032,7 +2032,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x6C5bf3eCE931C3d5A0F646A515551C4fe1593A26",
+  "address": "0xd9E35ae74Bfbca551F9b6384Cf1D858E5F4b656C",
   "asset_id": "c94ac88f-4671-3976-b60a-09064f1811e8",
   "name": "Mixin",
   "symbol": "XIN",
@@ -2041,7 +2041,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xe2BBB24Cd1B55B78088EbB8CC598Ed0b3416246D",
+  "address": "0xA3fB0889eD5f024BBC16CC5D0d77a82e19Dcb845",
   "asset_id": "43d61dcd-e413-450d-80b8-101d5e903357",
   "name": "Ether",
   "symbol": "ETH",
@@ -2050,7 +2050,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xB470D5afA83ebafe697D9dC9BAbA3273D62292De",
+  "address": "0x40008a6131e7F4540C85aeD8E9018E9dAD8765Ac",
   "asset_id": "eea900a8-b327-488c-8d8d-1428702fe240",
   "name": "MobileCoin",
   "symbol": "MOB",
@@ -2059,7 +2059,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xC40fa1ebd59dDF51E4747fBCbbD32AfC0A06A631",
+  "address": "0x83B39Fe45644d3c50Bd870f9f0261e74eF87c388",
   "asset_id": "4d8c508b-91c5-375b-92b0-ee702ed2dac5",
   "name": "Tether USD",
   "symbol": "USDT",
@@ -2068,7 +2068,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x8bf49b0D721edF49A5d48da63e81Cc215a381460",
+  "address": "0xb4a8a5c3b3Cc68c490d9b7F9c0D5Ba0901D181b1",
   "asset_id": "31d2ea9c-95eb-3355-b65b-ba096853bc18",
   "name": "Pando USD",
   "symbol": "pUSD",
@@ -2077,7 +2077,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x9c4eF7Ad22abdfdA68921DCeeF517bF257Fb3338",
+  "address": "0xAC9494204901c9c31064C04CF4bA2370AE280255",
   "asset_id": "4f2ec12c-22f4-3a9e-b757-c84b6415ea8f",
   "name": "Quorum Token",
   "symbol": "RUM",
