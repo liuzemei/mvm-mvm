@@ -3,18 +3,10 @@
     <h3>添加流动性</h3>
     <n-input-group>
       <n-input v-model:value="liquidityForm.amountA" placeholder="请输入要转账的金额" />
-      <n-select
-        :style="{ width: '33%' }"
-        :options="selectOptions"
-        v-model:value="liquidityForm.tokenA"
-      />
+      <n-select :style="{ width: '33%' }" :options="selectOptions" v-model:value="liquidityForm.tokenA" />
       <n-button type="primary" ghost @click="clickAddLiquidity('A')">获取转账二维码</n-button>
       <n-input :disabled="rate != 0" v-model:value="liquidityForm.amountB" placeholder="要转账的金额" />
-      <n-select
-        :style="{ width: '33%' }"
-        :options="selectOptions"
-        v-model:value="liquidityForm.tokenB"
-      />
+      <n-select :style="{ width: '33%' }" :options="selectOptions" v-model:value="liquidityForm.tokenB" />
       <n-button type="primary" ghost @click="clickAddLiquidity('B')">获取转账二维码</n-button>
     </n-input-group>
     <n-alert type="info" title="使用教程">
@@ -59,8 +51,8 @@ const clickAddLiquidity = async (type: 'A' | 'B') => {
   const extra = '00' + extraGeneratByInfo(
     MVMRouterAddress,
     'addLiquidity',
-    ['address', 'uint256', 'uint256'],
-    [token, new BigNumber(amount).times(1e8).toString(), 0],
+    ['address', 'uint256'],
+    [token, new BigNumber(amount).times(1e8).toString()],
   )
   tx.value = getMvmTransaction({
     asset,

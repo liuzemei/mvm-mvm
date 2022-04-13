@@ -44,7 +44,6 @@ import { computed } from '@vue/reactivity';
 import { ApiUploadParams } from '@/services/api';
 import { keccak256 } from 'ethers/lib/utils';
 
-BigNumber.config({ EXPONENTIAL_AT: [-18, 20] });
 
 const loading = useLoadingBar()
 const message = useMessage()
