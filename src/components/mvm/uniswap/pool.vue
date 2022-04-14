@@ -48,12 +48,12 @@ const clickAddLiquidity = async (type: 'A' | 'B') => {
   let token = liquidityForm[`token${type}`]
   let amount = liquidityForm[`amount${type}`]
   const asset = await getAssetIDByAddress(token, RegistryAddress)
-  const extra = '00' + extraGeneratByInfo(
-    MVMRouterAddress,
-    'addLiquidity',
-    ['address', 'uint256'],
-    [token, new BigNumber(amount).times(1e8).toString()],
-  )
+  const extra = await extraGeneratByInfo({
+    contractAddress: MVMRouterAddress,
+    methodName: 'addLiquidity',
+    types: ['address', 'uint256'],
+    values: [token, new BigNumber(amount).times(1e8).toString()],
+  })
   tx.value = getMvmTransaction({
     asset,
     amount,

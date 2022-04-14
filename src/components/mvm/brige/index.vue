@@ -1,8 +1,6 @@
 <template>
-  <n-alert
-    title="注意"
-    type="warning"
-  >所有 mixin messager 对 mvm 的合约调用, 都是通过转账触发的. 对于不需要转账的合约调用, 一律使用 0.00000001 CNB 来触发交易.(会退回)</n-alert>
+  <n-alert title="注意" type="warning">所有 mixin messager 对 mvm 的合约调用, 都是通过转账触发的. 对于不需要转账的合约调用, 一律使用 0.00000001 CNB
+    来触发交易.(会退回)</n-alert>
   <div class="space">
     <h3>绑定账户</h3>
     <n-input-group>
@@ -15,9 +13,7 @@
     <p>2. 此处输入 metamask 或者 imtoken... 的以太坊地址</p>
     <p>
       3. 注意需要添加 mvm 的网络,
-      <a
-        href="https://developers.mixin.one/zh-CN/docs/mainnet/mvm/metamask"
-      >Metamask配置教程请点击</a>
+      <a href="https://developers.mixin.one/zh-CN/docs/mainnet/mvm/metamask">Metamask配置教程请点击</a>
     </p>
     <p>4. 后续的跨链转账操作, 需要跟绑定扫码支付的 mixin 用户一致. 如果更换了 mixin messenger 用户, 请重新绑定账户.</p>
   </n-alert>
@@ -34,7 +30,8 @@
   <n-alert title="注意" type="warning">
     <p>1. 跨链转账之前请先绑定账户</p>
     <p>2. 获取转账二维码然后用 mixin 扫码支付 (要跟上一步扫码的 mixin 是同一个用户, 请不要更换用户扫码.)</p>
-    <p>3. 请先确认资产合约地址存在, 请在下方的输入框中输入 资产的 asset_id 或者 symbol 来获取. 如: CNB的 asset_id 为:[965e5c6e-434c-3fa9-b780-c50f43cd955c], symbol 为: [CNB]</p>
+    <p>3. 请先确认资产合约地址存在, 请在下方的输入框中输入 资产的 asset_id 或者 symbol 来获取. 如: CNB的 asset_id
+      为:[965e5c6e-434c-3fa9-b780-c50f43cd955c], symbol 为: [CNB]</p>
     <p>4. 转账成功后, 稍等片刻, 就会在账户中显示了.(首次转入资产, 需要在钱包中导入资产合约地址)</p>
     <p>5. 如果需要转回 mixin messenger 直接在下方根据 user_id 或者 mixin id 搜索您的合约地址, 然后直接通过钱包给该合约地址转账, 您的 messenger 就会收到指定资产了.</p>
   </n-alert>
@@ -90,12 +87,12 @@ const bind = ref('')
 
 const clickBind = async () => {
   loading.start()
-  const extra = '00' + extraGeneratByInfo(
-    BridgeAddress,
-    'bind',
-    ['address'],
-    [bind.value]
-  )
+  const extra = await extraGeneratByInfo({
+    contractAddress: BridgeAddress,
+    methodName: 'bind',
+    types: ['address'],
+    values: [bind.value]
+  })
   const tx = getMvmTransaction({
     asset: CNBAssetID,
     amount: CNBAmount,
@@ -116,12 +113,12 @@ const transfer = reactive({
 const clickTransfer = async () => {
   loading.start()
   const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress)
-  const extra = '00' + extraGeneratByInfo(
-    BridgeAddress,
-    'deposit',
-    ['address', 'uint256'],
-    [contract, new BigNumber(transfer.amount).times(1e8).toString()]
-  )
+  const extra = await extraGeneratByInfo({
+    contractAddress: BridgeAddress,
+    methodName: 'deposit',
+    types: ['address', 'uint256'],
+    values: [contract, new BigNumber(transfer.amount).times(1e8).toString()]
+  })
   const tx = getMvmTransaction({
     asset: transfer.asset_id,
     amount: transfer.amount,

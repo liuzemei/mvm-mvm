@@ -6,9 +6,10 @@ specifiers:
   '@vue/cli-plugin-typescript': ~4.5.15
   '@vue/cli-service': ~4.5.15
   '@vue/compiler-sfc': ^3.0.0
+  bignumber.js: ^9.0.2
   core-js: ^3.6.5
   ethers: ^5.6.1
-  mixin-node-sdk: 3.0.22
+  mixin-node-sdk: 3.0.23
   naive-ui: ^2.26.4
   qrious: ^4.0.2
   quorum-uniswap-sdk: ^1.0.1
@@ -18,9 +19,10 @@ specifiers:
 
 dependencies:
   '@uniswap/v2-core': 1.0.0
+  bignumber.js: 9.0.2
   core-js: registry.npmmirror.com/core-js/3.21.1
   ethers: 5.6.1
-  mixin-node-sdk: 3.0.22
+  mixin-node-sdk: 3.0.23
   naive-ui: 2.26.4_vue@3.2.31
   qrious: 4.0.2
   quorum-uniswap-sdk: 1.0.1
@@ -515,11 +517,10 @@ packages:
       - debug
     dev: false
 
-  /@types/bignumber.js/5.0.0:
-    resolution: {integrity: sha512-0DH7aPGCClywOFaxxjE6UwpN2kQYe9LwuDQMv+zYA97j5GkOMo8e66LYT+a8JYU7jfmUFRZLa9KycxHDsKXJCA==}
-    deprecated: This is a stub types definition for bignumber.js (https://github.com/MikeMcl/bignumber.js/). bignumber.js provides its own type definitions, so you don't need @types/bignumber.js installed!
+  /@types/bn.js/5.1.0:
+    resolution: {integrity: sha512-QSSVYj7pYFN49kW77o2s9xTCwZ8F2xLbjLLSEVh8D2F4JUhZtPAGOFLTD+ffqksBx/u4cE/KImFjyhqCjn/LIA==}
     dependencies:
-      bignumber.js: 9.0.2
+      '@types/node': 17.0.21
     dev: false
 
   /@types/jest/27.4.1:
@@ -685,6 +686,10 @@ packages:
 
   /bn.js/4.12.0:
     resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
+    dev: false
+
+  /bn.js/5.2.0:
+    resolution: {integrity: sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==}
     dev: false
 
   /brace-expansion/1.1.11:
@@ -1390,17 +1395,17 @@ packages:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: true
 
-  /mixin-node-sdk/3.0.22:
-    resolution: {integrity: sha512-yNbCwMZlc5+1pW+iPKWxYc5KDw3jAugxUjMH8ofpq5/FOF8BLzryxKY2YFKeUVj7l2WVMVBfbXZg6DCia42Pqg==}
+  /mixin-node-sdk/3.0.23:
+    resolution: {integrity: sha512-XQc8ePaKwCkVhZc/foAOobNWmG7M/VAFk0k84vQpWOtIN25DLSo/PRkqkQcicQd5kiF83TUrAB6B3Er+O3aclQ==}
     engines: {node: '>=10'}
     dependencies:
       '@types/axios': 0.14.0
-      '@types/bignumber.js': 5.0.0
+      '@types/bn.js': 5.1.0
       '@types/jsonwebtoken': 8.5.8
       '@types/node-forge': 0.10.10
       '@types/uuid': 8.3.4
       axios: 0.21.4
-      bignumber.js: 9.0.2
+      bn.js: 5.2.0
       ethers: 5.6.1
       int64-buffer: 1.0.1
       jsonwebtoken: 8.5.1
@@ -1455,7 +1460,6 @@ packages:
   /node-forge/0.10.0:
     resolution: {integrity: sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==}
     engines: {node: '>= 6.0.0'}
-    dev: false
 
   /object-assign/4.1.1:
     resolution: {integrity: sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=}
@@ -1783,10 +1787,15 @@ packages:
       punycode: 2.1.1
     dev: true
 
+  /uuid/3.4.0:
+    resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
+    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    hasBin: true
+    dev: true
+
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
-    dev: false
 
   /vdirs/0.1.7_vue@3.2.31:
     resolution: {integrity: sha512-MEUaLhV1jJyUqA2Ar4DfvlQx8jWs+PpCZ2dbM0ILelpMWGOybzt8ddL456VxeIbY/tkuDGT/Wzb8GG4LCuLuHw==}
@@ -8906,13 +8915,6 @@ packages:
       lower-case: registry.npmmirror.com/lower-case/1.1.4
     dev: true
 
-  registry.npmmirror.com/node-forge/0.10.0:
-    resolution: {integrity: sha512-PPmu8eEeG9saEUvI97fm4OYxXVB6bFvyNTyiUOBichBpFG8A1Ljw3bY62+5oOjDEMHRnd0Y7HQ+x7uzxOzC6JA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/node-forge/-/node-forge-0.10.0.tgz}
-    name: node-forge
-    version: 0.10.0
-    engines: {node: '>= 6.0.0'}
-    dev: true
-
   registry.npmmirror.com/node-ipc/9.2.1:
     resolution: {integrity: sha512-mJzaM6O3xHf9VT8BULvJSbdVbmHUKRNOH7zDDkCrA1/T+CVjq2WVIDfLt0azZRXpgArJtl3rtmEozrbXPZ9GaQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/node-ipc/-/node-ipc-9.2.1.tgz}
     name: node-ipc
@@ -10590,7 +10592,7 @@ packages:
     name: selfsigned
     version: 1.10.14
     dependencies:
-      node-forge: registry.npmmirror.com/node-forge/0.10.0
+      node-forge: 0.10.0
     dev: true
 
   registry.npmmirror.com/semver/5.7.1:
@@ -10847,7 +10849,7 @@ packages:
     version: 0.3.24
     dependencies:
       faye-websocket: registry.npmmirror.com/faye-websocket/0.11.4
-      uuid: registry.npmmirror.com/uuid/8.3.2
+      uuid: 8.3.2
       websocket-driver: registry.npmmirror.com/websocket-driver/0.7.4
     dev: true
 
@@ -11824,13 +11826,6 @@ packages:
     hasBin: true
     dev: true
 
-  registry.npmmirror.com/uuid/8.3.2:
-    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/uuid/-/uuid-8.3.2.tgz}
-    name: uuid
-    version: 8.3.2
-    hasBin: true
-    dev: true
-
   registry.npmmirror.com/validate-npm-package-license/3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz}
     name: validate-npm-package-license
@@ -12063,7 +12058,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       ansi-colors: registry.npmmirror.com/ansi-colors/3.2.4
-      uuid: registry.npmmirror.com/uuid/3.4.0
+      uuid: 3.4.0
     dev: true
 
   registry.npmmirror.com/webpack-merge/4.2.2:

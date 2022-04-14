@@ -8,9 +8,10 @@
   },
   "dependencies": {
     "@uniswap/v2-core": "1.0.0",
+    "bignumber.js": "^9.0.2",
     "core-js": "^3.6.5",
     "ethers": "^5.6.1",
-    "mixin-node-sdk": "3.0.22",
+    "mixin-node-sdk": "3.0.23",
     "naive-ui": "^2.26.4",
     "qrious": "^4.0.2",
     "quorum-uniswap-sdk": "^1.0.1",

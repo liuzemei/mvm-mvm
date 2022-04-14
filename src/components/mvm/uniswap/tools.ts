@@ -42,7 +42,7 @@ export const getExactOut = async (addrA: string, addrB: string, amountA: string)
   amountA = new BigNumber(amountA).times(1e8).toString()
   const paredAmount = new TokenAmount(tokenA, JSBI.BigInt(amountA))
   const trade = Trade.bestTradeExactIn([pair], paredAmount, tokenB, { maxHops: 3, maxNumResults: 1 })[0]
-  return trade.minimumAmountOut(fixedNumber).toExact()
+  return trade?.minimumAmountOut(fixedNumber).toExact() || ""
 }
 
 export const getPoolBalance = async (mixinID: string, addrA: string, addrB: string): Promise<string | string[]> => {

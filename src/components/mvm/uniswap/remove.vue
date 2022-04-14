@@ -12,13 +12,8 @@
       <n-slider v-model:value="slideLiquidity" :step="1" />
       <n-input v-model:value="resForm.liquidity" disabled placeholder="流动性余额" />
     </n-input-group>
-    <n-button
-      type="primary"
-      ghost
-      @click="clickRemoveLiquidity"
-      :disabled="btnDisable"
-      :loading="btnLoading"
-    >获取转账二维码</n-button>
+    <n-button type="primary" ghost @click="clickRemoveLiquidity" :disabled="btnDisable" :loading="btnLoading">获取转账二维码
+    </n-button>
     <n-alert type="info" title="使用教程">
       <p>1. 选择 tokenA, 如(CNB)</p>
       <p>2. 选择 tokenB, 如(NXC)</p>
@@ -41,8 +36,6 @@ import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
 import { getPoolBalance, getAllTokens } from './tools'
 import { computed } from '@vue/reactivity';
-import { ApiUploadParams } from '@/services/api';
-import { keccak256 } from 'ethers/lib/utils';
 
 
 const loading = useLoadingBar()
@@ -90,26 +83,28 @@ const clickRemoveLiquidity = async () => {
   const { tokenA, tokenB } = form
   const u = await MixinClient.readUser(form.uid)
   const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
-  const raw = '0x' + extraGeneratByInfo(
-    MVMRouterAddress,
-    'removeLiquidity',
-    ['address', 'address', 'address', 'address', 'uint256', 'uint256', 'uint256'],
-    [
+  const extra = await extraGeneratByInfo({
+    contractAddress: MVMRouterAddress,
+    methodName: 'removeLiquidity',
+    types: ['address', 'address', 'address', 'address', 'uint256', 'uint256', 'uint256'],
+    values: [
       pair.value,
       tokenA,
       tokenB,
       userContract,
       new BigNumber(resForm.value.liquidity).times(1e18).toString(),
       0, 0
-    ]
-  )
-
-  const key = keccak256(raw)
-  await ApiUploadParams(key, raw)
+    ],
+    options: {
+      uploadkey: '123',
+      delegatecall: true
+    }
+  })
+  console.log(extra)
   tx.value = getMvmTransaction({
     asset: CNBAssetID,
     amount: CNBAmount,
-    extra: '03' + key.slice(2),
+    extra,
     trace: MixinClient.newUUID(),
     process: RegistryProcess,
   })
