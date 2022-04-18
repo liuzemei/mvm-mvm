@@ -29,6 +29,7 @@ import { NLoadingBarProvider, NMessageProvider, NTabs, NTabPane } from 'naive-ui
 #app {
   margin: 20px;
 }
+
 .space {
   margin: 20px 0;
 }

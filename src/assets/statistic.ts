@@ -7,13 +7,13 @@ export const MVMRouterAddress = `0x774A9E576f14d81d7fB439efB1Eb14973a7144Fb`
 
 export const BridgeAddress = `0x96dC880Ed035CFdd2F334874379bb6A128aca788`
 
-export const RegistryAddress = `0x5237E9eFa0A57D2c415B853ff3A9a4C38Df7b1c8`
+export const RegistryAddress = `0x65ccF8d1B92AfC6aF2915Cb61e72d93ACdD16556`
 
-export const RegistryProcess = `e556d3ac-43c7-3355-819e-eda90da40451`
+export const RegistryProcess = `86c58765-ec81-3ca4-a35b-875f35a0ad7d`
 
 export const CNBAssetID = '965e5c6e-434c-3fa9-b780-c50f43cd955c'
 export const CNBAmount = '0.00000001'
-export const CNBAddress = '0xbE48C98736E54c99d92f1616e90FC944Deb64030'
+export const CNBAddress = '0x001fB10b1bFede8505AB138c2Bb2E239CB3b50dC'
 
 export const FactoryABI = [
   {
@@ -1987,7 +1987,7 @@ export const Erc20ABI = [
 
 export const TokenList = [{
   "chainId": 83927,
-  "address": "0xbE48C98736E54c99d92f1616e90FC944Deb64030",
+  "address": "0x001fB10b1bFede8505AB138c2Bb2E239CB3b50dC",
   "asset_id": "965e5c6e-434c-3fa9-b780-c50f43cd955c",
   "name": "Chui Niu Bi",
   "symbol": "CNB",
@@ -1996,7 +1996,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x2c17Ab13D7ff8397772443e5495E9F5472160e6C",
+  "address": "0x71c1C2D82b39C0e952751c9BEA39c28c70c47Ff4",
   "asset_id": "66152c0b-3355-38ef-9ec5-cae97e29472a",
   "name": "NXCoin",
   "symbol": "NXC",
@@ -2005,7 +2005,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xe2E4137FF1553F2845084E3965E27937674264FC",
+  "address": "0xCbc58c6EFd6E96d50888f8439d82d0402fE4C476",
   "asset_id": "c6d0c728-2624-429b-8e0d-d9d19b6592fa",
   "name": "Bitcoin",
   "symbol": "BTC",
@@ -2014,7 +2014,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x3d213F6b9F228029922A53366B6D4D4D0a535Abc",
+  "address": "0x356c9d95144D42B7C13d5bA44308180eF55aA3CC",
   "asset_id": "6cfe566e-4aad-470b-8c9a-2fd35b49c68d",
   "name": "EOS",
   "symbol": "EOS",
@@ -2023,7 +2023,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x54FbE0BF3973c9105553eC64fe62871Aa00FD5b2",
+  "address": "0x0412c009c27837B6891763d757Bb76cC8C4fE4A5",
   "asset_id": "f5ef6b5d-cc5a-3d90-b2c0-a2fd386e7a3c",
   "name": "BOX Token",
   "symbol": "BOX",
@@ -2032,7 +2032,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xd9E35ae74Bfbca551F9b6384Cf1D858E5F4b656C",
+  "address": "0x111323250Cf7734565fD0eB8ac917c47c0d1564E",
   "asset_id": "c94ac88f-4671-3976-b60a-09064f1811e8",
   "name": "Mixin",
   "symbol": "XIN",
@@ -2041,7 +2041,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xA3fB0889eD5f024BBC16CC5D0d77a82e19Dcb845",
+  "address": "0x19077536bbc955c891C073d667f1A1341c9d0fD2",
   "asset_id": "43d61dcd-e413-450d-80b8-101d5e903357",
   "name": "Ether",
   "symbol": "ETH",
@@ -2050,7 +2050,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x40008a6131e7F4540C85aeD8E9018E9dAD8765Ac",
+  "address": "0xd71d2178C4950f26927f426D5434666ac7f3E62F",
   "asset_id": "eea900a8-b327-488c-8d8d-1428702fe240",
   "name": "MobileCoin",
   "symbol": "MOB",
@@ -2059,7 +2059,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0x83B39Fe45644d3c50Bd870f9f0261e74eF87c388",
+  "address": "0x4B2fE68B8c40bDa8c1553bC5b117C56D4b7A557F",
   "asset_id": "4d8c508b-91c5-375b-92b0-ee702ed2dac5",
   "name": "Tether USD",
   "symbol": "USDT",
@@ -2068,7 +2068,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xb4a8a5c3b3Cc68c490d9b7F9c0D5Ba0901D181b1",
+  "address": "0x1cF1f0e83333209A174353c2089355c407635A1c",
   "asset_id": "31d2ea9c-95eb-3355-b65b-ba096853bc18",
   "name": "Pando USD",
   "symbol": "pUSD",
@@ -2077,7 +2077,7 @@ export const TokenList = [{
 },
 {
   "chainId": 83927,
-  "address": "0xAC9494204901c9c31064C04CF4bA2370AE280255",
+  "address": "0x1a684e8faF6524662b138eE395ef3FfA18388206",
   "asset_id": "4f2ec12c-22f4-3a9e-b757-c84b6415ea8f",
   "name": "Quorum Token",
   "symbol": "RUM",

@@ -64,7 +64,8 @@ const clickUploadParams = async () => {
     types: ['uint256', 'uint256', 'address[]', 'address', 'uint256'],
     values: [amountA, amountB, [tokenA, tokenB], userContract, time],
     options: {
-      uploadkey: '123'
+      uploadkey: '123',
+      address: RegistryAddress
     }
   })
   message.success('上传成功')
