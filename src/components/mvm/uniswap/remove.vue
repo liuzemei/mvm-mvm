@@ -30,12 +30,13 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage, NSlider } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { paymentGenerateByInfo, getContractByUserIDs, Payment, } from 'mixin-node-sdk';
+import { getContractByUserIDs, Payment, } from 'mixin-node-sdk';
 import { MVMRouterAddress } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
 import { getPoolBalance, getAllTokens } from './tools'
 import { computed } from '@vue/reactivity';
+import { ApiGetPayment } from '@/services/api';
 
 
 const loading = useLoadingBar()
@@ -83,7 +84,7 @@ const clickRemoveLiquidity = async () => {
   const { tokenA, tokenB } = form
   const u = await MixinClient.readUser(form.uid)
   const userContract = await getContractByUserIDs(u.user_id)
-  const payment = await paymentGenerateByInfo({
+  const payment = await ApiGetPayment({
     contractAddress: MVMRouterAddress,
     methodName: 'removeLiquidity',
     types: ['address', 'address', 'address', 'address', 'uint256', 'uint256', 'uint256'],

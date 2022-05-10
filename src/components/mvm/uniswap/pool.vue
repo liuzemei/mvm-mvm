@@ -26,11 +26,12 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { Payment, paymentGenerateByInfo } from 'mixin-node-sdk';
+import { Payment } from 'mixin-node-sdk';
 import { getAssetIDByAddress } from 'mixin-node-sdk'
 import { MVMRouterAddress, RegistryAddress } from '@/assets/statistic';
 import { BigNumber } from 'bignumber.js';
 import { getAllTokens, getRateByAddress } from './tools'
+import { ApiGetPayment } from '@/services/api';
 
 const loading = useLoadingBar()
 
@@ -47,7 +48,7 @@ const clickAddLiquidity = async (type: 'A' | 'B') => {
   let token = liquidityForm[`token${type}`]
   let amount = liquidityForm[`amount${type}`]
   const asset = await getAssetIDByAddress(token, RegistryAddress)
-  const payment = await paymentGenerateByInfo({
+  const payment = await ApiGetPayment({
     contractAddress: MVMRouterAddress,
     methodName: 'addLiquidity',
     types: ['address', 'uint256'],

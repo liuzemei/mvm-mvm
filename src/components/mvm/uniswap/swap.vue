@@ -25,14 +25,15 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue';
-import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage, NSpin } from 'naive-ui'
+import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { paymentGenerateByInfo, getAssetIDByAddress, getContractByUserIDs, Payment } from 'mixin-node-sdk';
+import { getAssetIDByAddress, getContractByUserIDs, Payment } from 'mixin-node-sdk';
 import { RegistryAddress, RegistryProcess, RouterAddress } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
 import { getAllTokens, getExactOut } from './tools'
+import { ApiGetPayment } from '@/services/api';
 
 const loading = useLoadingBar()
 const message = useMessage()
@@ -65,16 +66,11 @@ const clickAddLiquidity = async () => {
     types: ['uint256', 'uint256', 'address[]', 'address', 'uint256'],
     values: [amountA, amountB, [tokenA, tokenB], userContract, time],
   })
-  const payment = await paymentGenerateByInfo({
+  const payment = await ApiGetPayment({
     contractAddress: RouterAddress,
     methodName: 'swapExactTokensForTokens',
     types: ['uint256', 'uint256', 'address[]', 'address', 'uint256'],
     values: [amountA, amountB, [tokenA, tokenB], userContract, time],
-    options: {
-      uploadkey: '123',
-      process: RegistryProcess,
-      address: RegistryAddress
-    },
     payment: {
       asset,
       amount: liquidityForm.amountA,

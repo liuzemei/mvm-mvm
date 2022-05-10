@@ -5,9 +5,6 @@
         <n-tab-pane name="the beatles" tab="MVM">
           <MVM />
         </n-tab-pane>
-        <n-tab-pane name="oasis" tab="Metamask">
-          <HelloWorld />
-        </n-tab-pane>
       </n-tabs>
     </n-loading-bar-provider>
   </n-message-provider>

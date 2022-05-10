@@ -69,13 +69,14 @@
 
 <script setup lang="ts">
 import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui'
-import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, paymentGenerateByInfo, Payment } from 'mixin-node-sdk'
+import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, Payment } from 'mixin-node-sdk'
 import { reactive, ref } from 'vue';
 import { MixinClient } from '@/services/mixin'
 import { parse } from 'uuid'
-import { BridgeAddress, CNBAmount, CNBAssetID, RegistryAddress, RegistryProcess } from '@/assets/statistic';
+import { BridgeAddress, RegistryAddress, RegistryProcess } from '@/assets/statistic';
 import { BigNumber } from 'bignumber.js'
 import qrcode from '@/components/qrcode.vue';
+import { ApiGetPayment } from '@/services/api';
 
 const loading = useLoadingBar()
 const message = useMessage()
@@ -87,12 +88,12 @@ const bind = ref('')
 
 const clickBind = async () => {
   loading.start()
-  const payment = await paymentGenerateByInfo({
+  const payment = await ApiGetPayment({
     contractAddress: BridgeAddress,
     methodName: 'bind',
     types: ['address'],
     values: [bind.value],
-  }) as Payment
+  })
   showTxCodeModal(payment.code_id)
   loading.finish()
 }
@@ -106,7 +107,7 @@ const transfer = reactive({
 const clickTransfer = async () => {
   loading.start()
   const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress)
-  const payment = await paymentGenerateByInfo({
+  const payment = await ApiGetPayment({
     contractAddress: BridgeAddress,
     methodName: 'deposit',
     types: ['address', 'uint256'],
@@ -115,7 +116,7 @@ const clickTransfer = async () => {
       asset: transfer.asset_id,
       amount: transfer.amount
     }
-  }) as Payment
+  })
   showTxCodeModal(payment.code_id)
   loading.finish()
 }
