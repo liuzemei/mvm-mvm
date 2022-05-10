@@ -69,12 +69,12 @@
 
 <script setup lang="ts">
 import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui'
-import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGeneratByInfo, TransactionInput } from 'mixin-node-sdk'
+import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGenerateByInfo, TransactionInput } from 'mixin-node-sdk'
 import { reactive, ref } from 'vue';
 import { MixinClient } from '@/services/mixin'
 import { parse } from 'uuid'
 import { BridgeAddress, CNBAmount, CNBAssetID, RegistryAddress, RegistryProcess } from '@/assets/statistic';
-import { BigNumber } from 'BigNumber.js'
+import { BigNumber } from 'bignumber.js'
 import qrcode from '@/components/qrcode.vue';
 
 const loading = useLoadingBar()
@@ -87,11 +87,11 @@ const bind = ref('')
 
 const clickBind = async () => {
   loading.start()
-  const extra = await extraGeneratByInfo({
+  const extra = await extraGenerateByInfo({
     contractAddress: BridgeAddress,
     methodName: 'bind',
     types: ['address'],
-    values: [bind.value]
+    values: [bind.value],
   })
   const tx = getMvmTransaction({
     asset: CNBAssetID,
@@ -113,7 +113,7 @@ const transfer = reactive({
 const clickTransfer = async () => {
   loading.start()
   const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress)
-  const extra = await extraGeneratByInfo({
+  const extra = await extraGenerateByInfo({
     contractAddress: BridgeAddress,
     methodName: 'deposit',
     types: ['address', 'uint256'],

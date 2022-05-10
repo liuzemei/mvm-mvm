@@ -5,7 +5,7 @@
     <NAlert type="info">
       合约地址:
       <a :href="`https://testnet.mvmscan.com/address/${RegistryAddress}/transactions`" target="_blank">{{
-        RegistryAddress
+          RegistryAddress
       }}</a>
     </NAlert>
   </div>
@@ -45,7 +45,7 @@
 import { ref } from 'vue';
 import Qrcode from '@/components/qrcode.vue'
 import { NInput, NButton, NAlert, NSwitch, NRow } from 'naive-ui'
-import { extraGeneratByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
+import { extraGenerateByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { MixinClient } from '@/services/mixin';
 import { testParams, testInput } from './testData'
 import { RegistryProcess, RegistryAddress } from '@/assets/statistic';
@@ -73,7 +73,7 @@ const clickGenerateExtra = async () => {
     op = 2
   }
   if (address.startsWith('0x')) address = address.slice(2)
-  extraRes.value = await extraGeneratByInfo({
+  extraRes.value = await extraGenerateByInfo({
     contractAddress: address,
     methodName: method_name,
     types: method_type.split(','),

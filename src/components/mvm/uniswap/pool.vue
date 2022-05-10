@@ -26,7 +26,7 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { extraGeneratByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
+import { paymentGenerateByInfo, extraGenerateByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { getAssetIDByAddress } from 'mixin-node-sdk'
 import { MVMRouterAddress, RegistryAddress, RegistryProcess } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
@@ -48,7 +48,7 @@ const clickAddLiquidity = async (type: 'A' | 'B') => {
   let token = liquidityForm[`token${type}`]
   let amount = liquidityForm[`amount${type}`]
   const asset = await getAssetIDByAddress(token, RegistryAddress)
-  const extra = await extraGeneratByInfo({
+  const extra = await extraGenerateByInfo({
     contractAddress: MVMRouterAddress,
     methodName: 'addLiquidity',
     types: ['address', 'uint256'],

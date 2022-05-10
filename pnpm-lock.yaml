@@ -9,7 +9,7 @@ specifiers:
   bignumber.js: ^9.0.2
   core-js: ^3.6.5
   ethers: ^5.6.1
-  mixin-node-sdk: 3.0.24
+  mixin-node-sdk: 3.0.27
   naive-ui: ^2.26.4
   qrious: ^4.0.2
   quorum-uniswap-sdk: ^1.0.1
@@ -22,7 +22,7 @@ dependencies:
   bignumber.js: 9.0.2
   core-js: registry.npmmirror.com/core-js/3.21.1
   ethers: 5.6.1
-  mixin-node-sdk: 3.0.24
+  mixin-node-sdk: 3.0.27
   naive-ui: 2.26.4_vue@3.2.31
   qrious: 4.0.2
   quorum-uniswap-sdk: 1.0.1
@@ -686,11 +686,9 @@ packages:
 
   /bn.js/4.12.0:
     resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==}
-    dev: false
 
   /bn.js/5.2.0:
     resolution: {integrity: sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==}
-    dev: false
 
   /brace-expansion/1.1.11:
     resolution: {integrity: sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==}
@@ -1395,8 +1393,8 @@ packages:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
     dev: true
 
-  /mixin-node-sdk/3.0.24:
-    resolution: {integrity: sha512-Pnj7jlqp1i7HqJlKXNdiYJdpRDhhV8OpR4d+HJJXp0CbeOhgN1vEiIX0QxKzBv7jIYreurTa1q7+E8eMa0z36Q==}
+  /mixin-node-sdk/3.0.27:
+    resolution: {integrity: sha512-5KoMmVqLthNCrUEigZE1wPA9AMLSUBDMQ0/rizkMFCBncFhWTlx9UQ1fydSUccw4f5ZC5V8N5JK0vp2lVsij1w==}
     engines: {node: '>=10'}
     dependencies:
       '@types/axios': 0.14.0
@@ -4599,7 +4597,7 @@ packages:
     name: asn1.js
     version: 5.4.1
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/4.12.0
+      bn.js: 4.12.0
       inherits: registry.npmmirror.com/inherits/2.0.4
       minimalistic-assert: registry.npmmirror.com/minimalistic-assert/1.0.1
       safer-buffer: registry.npmmirror.com/safer-buffer/2.1.2
@@ -4860,18 +4858,6 @@ packages:
     version: 3.7.2
     dev: true
 
-  registry.npmmirror.com/bn.js/4.12.0:
-    resolution: {integrity: sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bn.js/-/bn.js-4.12.0.tgz}
-    name: bn.js
-    version: 4.12.0
-    dev: true
-
-  registry.npmmirror.com/bn.js/5.2.0:
-    resolution: {integrity: sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bn.js/-/bn.js-5.2.0.tgz}
-    name: bn.js
-    version: 5.2.0
-    dev: true
-
   registry.npmmirror.com/body-parser/1.19.2:
     resolution: {integrity: sha512-SAAwOxgoCKMGs9uUAUFHygfLAyaniaoun6I8mFY9pRAJL9+Kec34aU+oIjDhTycub1jozEfEwx1W1IuOYxVSFw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/body-parser/-/body-parser-1.19.2.tgz}
     name: body-parser
@@ -4990,7 +4976,7 @@ packages:
     name: browserify-rsa
     version: 4.1.0
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/5.2.0
+      bn.js: 5.2.0
       randombytes: registry.npmmirror.com/randombytes/2.1.0
     dev: true
 
@@ -4999,7 +4985,7 @@ packages:
     name: browserify-sign
     version: 4.2.1
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/5.2.0
+      bn.js: 5.2.0
       browserify-rsa: registry.npmmirror.com/browserify-rsa/4.1.0
       create-hash: registry.npmmirror.com/create-hash/1.2.0
       create-hmac: registry.npmmirror.com/create-hmac/1.1.7
@@ -5681,7 +5667,7 @@ packages:
     name: create-ecdh
     version: 4.0.4
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/4.12.0
+      bn.js: 4.12.0
       elliptic: registry.npmmirror.com/elliptic/6.5.4
     dev: true
 
@@ -6183,7 +6169,7 @@ packages:
     name: diffie-hellman
     version: 5.0.3
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/4.12.0
+      bn.js: 4.12.0
       miller-rabin: registry.npmmirror.com/miller-rabin/4.0.1
       randombytes: registry.npmmirror.com/randombytes/2.1.0
     dev: true
@@ -6374,7 +6360,7 @@ packages:
     name: elliptic
     version: 6.5.4
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/4.12.0
+      bn.js: 4.12.0
       brorand: registry.npmmirror.com/brorand/1.1.0
       hash.js: registry.npmmirror.com/hash.js/1.1.7
       hmac-drbg: registry.npmmirror.com/hmac-drbg/1.0.1
@@ -8666,7 +8652,7 @@ packages:
     version: 4.0.1
     hasBin: true
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/4.12.0
+      bn.js: 4.12.0
       brorand: registry.npmmirror.com/brorand/1.1.0
     dev: true
 
@@ -10080,7 +10066,7 @@ packages:
     name: public-encrypt
     version: 4.0.3
     dependencies:
-      bn.js: registry.npmmirror.com/bn.js/4.12.0
+      bn.js: 4.12.0
       browserify-rsa: registry.npmmirror.com/browserify-rsa/4.1.0
       create-hash: registry.npmmirror.com/create-hash/1.2.0
       parse-asn1: registry.npmmirror.com/parse-asn1/5.1.6

@@ -28,7 +28,7 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage, NSpin } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { extraGeneratByInfo, getAssetIDByAddress, getContractByUserIDs, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
+import { extraGenerateByInfo, getAssetIDByAddress, getContractByUserIDs, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { RegistryAddress, RegistryProcess, RouterAddress } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
@@ -58,7 +58,7 @@ const clickUploadParams = async () => {
   const time = Math.ceil(Date.now() / 1000) + 300
   const u = await MixinClient.readUser(identity_number.value)
   const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
-  params.value = await extraGeneratByInfo({
+  params.value = await extraGenerateByInfo({
     contractAddress: RouterAddress,
     methodName: 'swapExactTokensForTokens',
     types: ['uint256', 'uint256', 'address[]', 'address', 'uint256'],
