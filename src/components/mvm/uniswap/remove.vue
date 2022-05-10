@@ -22,7 +22,7 @@
       <p>5. 等待二维码出来后扫码, 即完成移除.</p>
     </n-alert>
   </div>
-  <Qrcode :show-modal="showQrcode" :tx="tx" @close="() => showQrcode = false" />
+  <Qrcode :show-modal="showQrcode" :code_id="code_id" @close="() => showQrcode = false" />
 </template>
 
 <script setup lang="ts">
@@ -30,8 +30,8 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage, NSlider } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { extraGenerateByInfo, getContractByUserIDs, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
-import { CNBAmount, CNBAssetID, MVMRouterAddress, RegistryAddress, RegistryProcess } from '@/assets/statistic';
+import { paymentGenerateByInfo, getContractByUserIDs, Payment, } from 'mixin-node-sdk';
+import { MVMRouterAddress } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
 import { getPoolBalance, getAllTokens } from './tools'
@@ -82,8 +82,8 @@ const clickRemoveLiquidity = async () => {
   btnLoading.value = true
   const { tokenA, tokenB } = form
   const u = await MixinClient.readUser(form.uid)
-  const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
-  const extra = await extraGenerateByInfo({
+  const userContract = await getContractByUserIDs(u.user_id)
+  const payment = await paymentGenerateByInfo({
     contractAddress: MVMRouterAddress,
     methodName: 'removeLiquidity',
     types: ['address', 'address', 'address', 'address', 'uint256', 'uint256', 'uint256'],
@@ -95,19 +95,9 @@ const clickRemoveLiquidity = async () => {
       new BigNumber(resForm.value.liquidity).times(1e18).toString(),
       0, 0
     ],
-    options: {
-      uploadkey: '123',
-      delegatecall: true
-    }
-  })
-  console.log(extra)
-  tx.value = getMvmTransaction({
-    asset: CNBAssetID,
-    amount: CNBAmount,
-    extra,
-    trace: MixinClient.newUUID(),
-    process: RegistryProcess,
-  })
+    options: { uploadkey: '123', delegatecall: true }
+  }) as Payment
+  code_id.value = payment.code_id
   showQrcode.value = true
   btnLoading.value = false
   loading.finish()
@@ -148,5 +138,5 @@ watch(form, async (n, o) => {
 
 
 const showQrcode = ref(false)
-const tx = ref<TransactionInput>()
+const code_id = ref<string>("")
 </script>

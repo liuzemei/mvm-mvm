@@ -1,13 +1,7 @@
 <template>
   <n-modal :show="props.showModal" @mask-click="() => emit('close')" @esc="() => emit('close')">
-    <n-card
-      style="width: 600px"
-      title="请使用 Mixin Messenger 扫码"
-      :bordered="false"
-      size="huge"
-      role="dialog"
-      aria-modal="true"
-    >
+    <n-card style="width: 600px" title="请使用 Mixin Messenger 扫码" :bordered="false" size="huge" role="dialog"
+      aria-modal="true">
       <canvas ref="codeRef" style="width:300px;height:300px" />
     </n-card>
   </n-modal>
@@ -15,8 +9,6 @@
 
 
 <script setup lang="ts">
-import { MixinClient } from '@/services/mixin';
-import { TransactionInput } from 'mixin-node-sdk';
 import { useLoadingBar, NModal, NCard } from 'naive-ui'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import Qrious from 'qrious'
@@ -26,9 +18,8 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  tx: {
-    type: Object,
-    default: () => ({}),
+  code_id: {
+    type: String,
   }
 })
 
@@ -40,22 +31,21 @@ const codeRef = ref(null)
 watch(() => props.showModal, async (o, n) => {
   if (o) {
     loading.start()
-    const { code_id } = await MixinClient.verifyPayment(props.tx as TransactionInput)
     nextTick(() => new Qrious({
       element: codeRef.value,
-      value: 'mixin://codes/' + code_id,
+      value: 'mixin://codes/' + props.code_id,
     }))
     loading.finish()
   }
 })
 
 onMounted(async () => {
-  if (!props.tx.trace_id) return
+  if (!props.code_id) return
   loading.start()
-  const { code_id } = await MixinClient.verifyPayment(props.tx as TransactionInput)
+  // const { code_id } = await MixinClient.verifyPayment(props.tx as TransactionInput)
   nextTick(() => new Qrious({
     element: codeRef.value,
-    value: 'mixin://codes/' + code_id,
+    value: 'mixin://codes/' + props.code_id,
   }))
   loading.finish()
 })

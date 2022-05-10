@@ -18,7 +18,7 @@
       <p>6. 完成流动性添加</p>
     </n-alert>
   </div>
-  <Qrcode :show-modal="showQrcode" :tx="tx" @close="() => showQrcode = false" />
+  <Qrcode :show-modal="showQrcode" :code_id="code_id" @close="() => showQrcode = false" />
 </template>
 
 <script setup lang="ts">
@@ -26,10 +26,9 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { paymentGenerateByInfo, extraGenerateByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
+import { Payment, paymentGenerateByInfo } from 'mixin-node-sdk';
 import { getAssetIDByAddress } from 'mixin-node-sdk'
-import { MVMRouterAddress, RegistryAddress, RegistryProcess } from '@/assets/statistic';
-import { MixinClient } from '@/services/mixin';
+import { MVMRouterAddress, RegistryAddress } from '@/assets/statistic';
 import { BigNumber } from 'bignumber.js';
 import { getAllTokens, getRateByAddress } from './tools'
 
@@ -48,19 +47,14 @@ const clickAddLiquidity = async (type: 'A' | 'B') => {
   let token = liquidityForm[`token${type}`]
   let amount = liquidityForm[`amount${type}`]
   const asset = await getAssetIDByAddress(token, RegistryAddress)
-  const extra = await extraGenerateByInfo({
+  const payment = await paymentGenerateByInfo({
     contractAddress: MVMRouterAddress,
     methodName: 'addLiquidity',
     types: ['address', 'uint256'],
     values: [token, new BigNumber(amount).times(1e8).toString()],
-  })
-  tx.value = getMvmTransaction({
-    asset,
-    amount,
-    extra,
-    trace: MixinClient.newUUID(),
-    process: RegistryProcess,
-  })
+    payment: { asset, amount }
+  }) as Payment
+  code_id.value = payment.code_id
   showQrcode.value = true
   loading.finish()
 }
@@ -87,5 +81,5 @@ watch(liquidityForm, async (n, o) => {
 
 
 const showQrcode = ref(false)
-const tx = ref<TransactionInput>()
+const code_id = ref<string>("")
 </script>

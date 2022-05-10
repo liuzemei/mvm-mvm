@@ -20,7 +20,7 @@
       <p>8. 在钱包内查看兑换的币种, 完成兑换</p>
     </n-alert>
   </div>
-  <Qrcode :show-modal="showQrcode" :tx="tx" @close="() => showQrcode = false" />
+  <Qrcode :show-modal="showQrcode" :code_id="code_id" @close="() => showQrcode = false" />
 </template>
 
 <script setup lang="ts">
@@ -28,7 +28,7 @@ import { onMounted, reactive, ref, watch } from 'vue';
 import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage, NSpin } from 'naive-ui'
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
-import { extraGenerateByInfo, getAssetIDByAddress, getContractByUserIDs, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
+import { paymentGenerateByInfo, getAssetIDByAddress, getContractByUserIDs, Payment } from 'mixin-node-sdk';
 import { RegistryAddress, RegistryProcess, RouterAddress } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
@@ -47,44 +47,40 @@ const liquidityForm = reactive({
 const showLoading = ref(false)
 const selectOptions = ref<SelectMixedOption[]>()
 
-const params = ref('')
 const identity_number = ref('')
 
-const clickUploadParams = async () => {
+const clickAddLiquidity = async () => {
+  showLoading.value = true
   loading.start()
+  const token = liquidityForm.tokenA
+  const asset = await getAssetIDByAddress(token, RegistryAddress)
+
   let { amountA, amountB, tokenA, tokenB } = liquidityForm
   amountA = new BigNumber(amountA).times(1e8).toString()
   amountB = new BigNumber(amountB).times(1e8).toString()
   const time = Math.ceil(Date.now() / 1000) + 300
   const u = await MixinClient.readUser(identity_number.value)
   const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
-  params.value = await extraGenerateByInfo({
+  console.log({
+    types: ['uint256', 'uint256', 'address[]', 'address', 'uint256'],
+    values: [amountA, amountB, [tokenA, tokenB], userContract, time],
+  })
+  const payment = await paymentGenerateByInfo({
     contractAddress: RouterAddress,
     methodName: 'swapExactTokensForTokens',
     types: ['uint256', 'uint256', 'address[]', 'address', 'uint256'],
     values: [amountA, amountB, [tokenA, tokenB], userContract, time],
     options: {
       uploadkey: '123',
+      process: RegistryProcess,
       address: RegistryAddress
+    },
+    payment: {
+      asset,
+      amount: liquidityForm.amountA,
     }
-  })
-  message.success('上传成功')
-  loading.finish()
-}
-
-const clickAddLiquidity = async () => {
-  showLoading.value = true
-  await clickUploadParams()
-  loading.start()
-  const token = liquidityForm.tokenA
-  const asset = await getAssetIDByAddress(token, RegistryAddress)
-  tx.value = getMvmTransaction({
-    asset,
-    amount: liquidityForm.amountA,
-    extra: params.value,
-    trace: MixinClient.newUUID(),
-    process: RegistryProcess,
-  })
+  }) as Payment
+  code_id.value = payment.code_id
   showQrcode.value = true
   loading.finish()
   showLoading.value = false
@@ -111,5 +107,5 @@ watch(liquidityForm, async () => {
 
 
 const showQrcode = ref(false)
-const tx = ref<TransactionInput>()
+const code_id = ref<string>()
 </script>

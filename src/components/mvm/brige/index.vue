@@ -64,12 +64,12 @@
     <p>1. mvm 中初次使用的资产, 是无法搜索到的</p>
     <p>2. 无法搜索到的资产, 请先点击添加资产, 给 mvm 合约转账后, 成功后稍等一会再点击搜索. (资产会自动退回)</p>
   </n-alert>
-  <qrcode v-if="showTxCode" :tx="tx" :show-modal="showTxCode" @close="closeTxCode" />
+  <qrcode v-if="showTxCode" :code_id="code_id" :show-modal="showTxCode" @close="closeTxCode" />
 </template>
 
 <script setup lang="ts">
 import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui'
-import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGenerateByInfo, TransactionInput } from 'mixin-node-sdk'
+import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, paymentGenerateByInfo, Payment } from 'mixin-node-sdk'
 import { reactive, ref } from 'vue';
 import { MixinClient } from '@/services/mixin'
 import { parse } from 'uuid'
@@ -87,20 +87,13 @@ const bind = ref('')
 
 const clickBind = async () => {
   loading.start()
-  const extra = await extraGenerateByInfo({
+  const payment = await paymentGenerateByInfo({
     contractAddress: BridgeAddress,
     methodName: 'bind',
     types: ['address'],
     values: [bind.value],
-  })
-  const tx = getMvmTransaction({
-    asset: CNBAssetID,
-    amount: CNBAmount,
-    extra,
-    trace: MixinClient.newUUID(),
-    process: RegistryProcess
-  })
-  showTxCodeModal(tx)
+  }) as Payment
+  showTxCodeModal(payment.code_id)
   loading.finish()
 }
 
@@ -113,20 +106,17 @@ const transfer = reactive({
 const clickTransfer = async () => {
   loading.start()
   const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress)
-  const extra = await extraGenerateByInfo({
+  const payment = await paymentGenerateByInfo({
     contractAddress: BridgeAddress,
     methodName: 'deposit',
     types: ['address', 'uint256'],
-    values: [contract, new BigNumber(transfer.amount).times(1e8).toString()]
-  })
-  const tx = getMvmTransaction({
-    asset: transfer.asset_id,
-    amount: transfer.amount,
-    extra,
-    trace: MixinClient.newUUID(),
-    process: RegistryProcess
-  })
-  showTxCodeModal(tx)
+    values: [contract, new BigNumber(transfer.amount).times(1e8).toString()],
+    payment: {
+      asset: transfer.asset_id,
+      amount: transfer.amount
+    }
+  }) as Payment
+  showTxCodeModal(payment.code_id)
   loading.finish()
 }
 
@@ -167,7 +157,6 @@ const clickSearch = async (type: string) => {
   }
 }
 
-
 // 点击添加资产
 const clickAddAsset = async () => {
   loading.start()
@@ -180,16 +169,14 @@ const clickAddAsset = async () => {
       trace: MixinClient.newUUID(),
       process: RegistryProcess
     })
-
-    showTxCodeModal(txInput)
+    const payment = await MixinClient.verifyPayment(txInput)
+    showTxCodeModal(payment.code_id)
     loading.finish()
   } catch (e: any) {
     message.error(e.message)
     loading.error()
   }
 }
-
-
 
 // 获取 asset_id
 const getAssetIDBySearch = async (): Promise<string> => {
@@ -207,9 +194,9 @@ const getAssetIDBySearch = async (): Promise<string> => {
 
 // -------- 二维码相关
 const showTxCode = ref(false)
-const tx = ref<TransactionInput>()
-function showTxCodeModal(_tx: TransactionInput) {
-  tx.value = _tx
+const code_id = ref<string>("")
+function showTxCodeModal(id: string) {
+  code_id.value = id
   showTxCode.value = true
 }
 
