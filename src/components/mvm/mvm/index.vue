@@ -39,20 +39,20 @@
     <n-button type="primary" ghost @click="clickGenerateTxInput">生成二维码</n-button>
   </div>
 
-  <Qrcode :show-modal="showQrcode" :tx="tx" @close="() => showQrcode = false" />
+  <Qrcode :show-modal="showQrcode" :code_id="code_id" @close="() => showQrcode = false" />
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
 import Qrcode from '@/components/qrcode.vue'
 import { NInput, NButton, NAlert, NSwitch, NRow } from 'naive-ui'
-import { extraGenerateByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
+import { extraGenerateByInfo, getMvmTransaction } from 'mixin-node-sdk';
 import { MixinClient } from '@/services/mixin';
 import { testParams, testInput } from './testData'
 import { RegistryProcess, RegistryAddress } from '@/assets/statistic';
 const process = ref(RegistryProcess)
 
 const showQrcode = ref(false)
-const tx = ref<TransactionInput>()
+const code_id = ref<string>("")
 
 const emptyExtra = {
   address: '',
@@ -95,13 +95,15 @@ const emptyInput = {
 
 const txInput = ref(emptyInput)
 
-const clickGenerateTxInput = () => {
+const clickGenerateTxInput = async () => {
   const { asset, amount, extra } = txInput.value
-  tx.value = getMvmTransaction({
+  const _tx = getMvmTransaction({
     asset, amount, extra,
     trace: MixinClient.newUUID(),
     process: process.value
   })
+  const payment = await MixinClient.verifyPayment(_tx)
+  code_id.value = payment.code_id
   showQrcode.value = true
 }
 
