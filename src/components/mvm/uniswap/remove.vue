@@ -27,25 +27,25 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue';
-import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage, NSlider } from 'naive-ui'
+import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar, useMessage, NSlider } from 'naive-ui';
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
 import { extraGenerateByInfo, getContractByUserIDs, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { CNBAmount, CNBAssetID, MVMRouterAddress, RegistryAddress, RegistryProcess } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
-import { getPoolBalance, getAllTokens } from './tools'
+import { getPoolBalance, getAllTokens } from './tools';
 import { computed } from '@vue/reactivity';
 
 
-const loading = useLoadingBar()
-const message = useMessage()
+const loading = useLoadingBar();
+const message = useMessage();
 
 const form = reactive({
   uid: '',
   tokenA: '请选择 tokenA',
   tokenB: '请选择 tokenB',
-})
+});
 
 const resForm = ref({
   totalLiquidity: '0',
@@ -54,35 +54,35 @@ const resForm = ref({
   liquidity: '0',
   amountA: '0',
   amountB: '0',
-})
+});
 
 const slideLiquidity = computed<number>({
   get() {
-    const { totalLiquidity, liquidity } = resForm.value
-    if (totalLiquidity === '0') return 0
-    return Number(new BigNumber(liquidity).div(totalLiquidity).times(100).toFixed(18))
+    const { totalLiquidity, liquidity } = resForm.value;
+    if (totalLiquidity === '0') return 0;
+    return Number(new BigNumber(liquidity).div(totalLiquidity).times(100).toFixed(18));
   },
   set(val) {
-    const rate = new BigNumber(val).div(100)
-    const { totalAmountA, totalAmountB, totalLiquidity } = resForm.value
+    const rate = new BigNumber(val).div(100);
+    const { totalAmountA, totalAmountB, totalLiquidity } = resForm.value;
     resForm.value = {
       ...resForm.value,
       liquidity: rate.times(totalLiquidity).toString(),
       amountA: rate.times(totalAmountA).toString(),
       amountB: rate.times(totalAmountB).toString(),
-    }
-  }
-})
+    };
+  },
+});
 
-const selectOptions = ref<SelectMixedOption[]>()
-const pair = ref('')
+const selectOptions = ref<SelectMixedOption[]>();
+const pair = ref('');
 
 const clickRemoveLiquidity = async () => {
-  loading.start()
-  btnLoading.value = true
-  const { tokenA, tokenB } = form
-  const u = await MixinClient.readUser(form.uid)
-  const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
+  loading.start();
+  btnLoading.value = true;
+  const { tokenA, tokenB } = form;
+  const u = await MixinClient.readUser(form.uid);
+  const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress);
   const extra = await extraGenerateByInfo({
     contractAddress: MVMRouterAddress,
     methodName: 'removeLiquidity',
@@ -93,47 +93,47 @@ const clickRemoveLiquidity = async () => {
       tokenB,
       userContract,
       new BigNumber(resForm.value.liquidity).times(1e18).toString(),
-      0, 0
+      0, 0,
     ],
     options: {
       uploadkey: '123',
-      delegatecall: true
-    }
-  })
-  console.log(extra)
+      delegatecall: true,
+    },
+  });
+  console.log(extra);
   tx.value = getMvmTransaction({
     asset: CNBAssetID,
     amount: CNBAmount,
     extra,
     trace: MixinClient.newUUID(),
     process: RegistryProcess,
-  })
-  showQrcode.value = true
-  btnLoading.value = false
-  loading.finish()
-}
+  });
+  showQrcode.value = true;
+  btnLoading.value = false;
+  loading.finish();
+};
 
 onMounted(async () => {
-  const allTokens = await getAllTokens()
+  const allTokens = await getAllTokens();
   selectOptions.value = Object.values(allTokens).map(token => ({
     label: token.symbol!,
     value: token.address!,
-  }))
-})
+  }));
+});
 
-const btnDisable = ref(true)
-const btnLoading = ref(false)
+const btnDisable = ref(true);
+const btnLoading = ref(false);
 watch(form, async (n, o) => {
-  const { tokenA, tokenB, uid } = form
-  if (tokenA.startsWith('请选择') || tokenB.startsWith('请选择') || tokenA === tokenB || uid.length < 5) return
-  btnLoading.value = true
-  const res = await getPoolBalance(uid, tokenA, tokenB)
+  const { tokenA, tokenB, uid } = form;
+  if (tokenA.startsWith('请选择') || tokenB.startsWith('请选择') || tokenA === tokenB || uid.length < 5) return;
+  btnLoading.value = true;
+  const res = await getPoolBalance(uid, tokenA, tokenB);
   if (typeof res === 'string') {
-    btnLoading.value = false
-    return message.error(res)
+    btnLoading.value = false;
+    return message.error(res);
   }
-  const [_liquidityAddress, userPool, token0, token1] = res
-  pair.value = _liquidityAddress
+  const [_liquidityAddress, userPool, token0, token1] = res;
+  pair.value = _liquidityAddress;
   resForm.value = {
     totalLiquidity: userPool.toString(),
     totalAmountA: token0.toString(),
@@ -141,12 +141,12 @@ watch(form, async (n, o) => {
     liquidity: userPool.toString(),
     amountA: token0.toString(),
     amountB: token1.toString(),
-  }
-  btnLoading.value = false
-  btnDisable.value = false
-}, { immediate: true })
+  };
+  btnLoading.value = false;
+  btnDisable.value = false;
+}, { immediate: true });
 
 
-const showQrcode = ref(false)
-const tx = ref<TransactionInput>()
+const showQrcode = ref(false);
+const tx = ref<TransactionInput>();
 </script>

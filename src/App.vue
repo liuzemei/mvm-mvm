@@ -6,7 +6,7 @@
           <MVM />
         </n-tab-pane>
         <n-tab-pane name="oasis" tab="Metamask">
-          <HelloWorld />
+          <Metamask />
         </n-tab-pane>
       </n-tabs>
     </n-loading-bar-provider>
@@ -15,9 +15,9 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from '@/components/metamask/index.vue'
-import MVM from '@/components/mvm/index.vue'
-import { NLoadingBarProvider, NMessageProvider, NTabs, NTabPane } from 'naive-ui'
+import Metamask from '@/components/metamask/index.vue';
+import MVM from '@/components/mvm/index.vue';
+import { NLoadingBarProvider, NMessageProvider, NTabs, NTabPane } from 'naive-ui';
 </script>
 
 <style>

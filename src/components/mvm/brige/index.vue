@@ -1,6 +1,7 @@
 <template>
   <n-alert title="注意" type="warning">所有 mixin messager 对 mvm 的合约调用, 都是通过转账触发的. 对于不需要转账的合约调用, 一律使用 0.00000001 CNB
-    来触发交易.(会退回)</n-alert>
+    来触发交易.(会退回)
+  </n-alert>
   <div class="space">
     <h3>绑定账户</h3>
     <n-input-group>
@@ -68,152 +69,159 @@
 </template>
 
 <script setup lang="ts">
-import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui'
-import { getContractByUserIDs, getContractByAssetID, getMvmTransaction, searchNetworkAsset, extraGenerateByInfo, TransactionInput } from 'mixin-node-sdk'
+import { NInput, NInputGroup, NButton, useLoadingBar, useMessage, NAlert } from 'naive-ui';
+import {
+  getContractByUserIDs,
+  getContractByAssetID,
+  getMvmTransaction,
+  searchNetworkAsset,
+  extraGenerateByInfo,
+  TransactionInput,
+} from 'mixin-node-sdk';
 import { reactive, ref } from 'vue';
-import { MixinClient } from '@/services/mixin'
-import { parse } from 'uuid'
+import { MixinClient } from '@/services/mixin';
+import { parse } from 'uuid';
 import { BridgeAddress, CNBAmount, CNBAssetID, RegistryAddress, RegistryProcess } from '@/assets/statistic';
-import { BigNumber } from 'bignumber.js'
+import { BigNumber } from 'bignumber.js';
 import qrcode from '@/components/qrcode.vue';
 
-const loading = useLoadingBar()
-const message = useMessage()
+const loading = useLoadingBar();
+const message = useMessage();
 
-const nullAddress = '0x0000000000000000000000000000000000000000'
+const nullAddress = '0x0000000000000000000000000000000000000000';
 
 // 绑定账户
-const bind = ref('')
+const bind = ref('');
 
 const clickBind = async () => {
-  loading.start()
+  loading.start();
   const extra = await extraGenerateByInfo({
     contractAddress: BridgeAddress,
     methodName: 'bind',
     types: ['address'],
     values: [bind.value],
-  })
+  });
   const tx = getMvmTransaction({
     asset: CNBAssetID,
     amount: CNBAmount,
     extra,
     trace: MixinClient.newUUID(),
-    process: RegistryProcess
-  })
-  showTxCodeModal(tx)
-  loading.finish()
-}
+    process: RegistryProcess,
+  });
+  showTxCodeModal(tx);
+  loading.finish();
+};
 
 // 跨链转账
 const transfer = reactive({
   asset_id: '',
-  amount: ''
-})
+  amount: '',
+});
 
 const clickTransfer = async () => {
-  loading.start()
-  const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress)
+  loading.start();
+  const contract = await getContractByAssetID(transfer.asset_id, RegistryAddress);
   const extra = await extraGenerateByInfo({
     contractAddress: BridgeAddress,
     methodName: 'deposit',
     types: ['address', 'uint256'],
-    values: [contract, new BigNumber(transfer.amount).times(1e8).toString()]
-  })
+    values: [contract, new BigNumber(transfer.amount).times(1e8).toString()],
+  });
   const tx = getMvmTransaction({
     asset: transfer.asset_id,
     amount: transfer.amount,
     extra,
     trace: MixinClient.newUUID(),
-    process: RegistryProcess
-  })
-  showTxCodeModal(tx)
-  loading.finish()
-}
+    process: RegistryProcess,
+  });
+  showTxCodeModal(tx);
+  loading.finish();
+};
 
 // ----------- 搜索相关
 const user = reactive({
   search: '',
-  res: ''
-})
+  res: '',
+});
 
 const asset = reactive({
   search: '',
-  res: ''
-})
+  res: '',
+});
 
 const clickSearch = async (type: string) => {
-  loading.start()
+  loading.start();
   try {
     if (type === 'user') {
-      const u = await MixinClient.readUser(user.search)
+      const u = await MixinClient.readUser(user.search);
       if (!u.user_id)
-        throw new Error('用户不存在')
-      const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress)
+        throw new Error('用户不存在');
+      const userContract = await getContractByUserIDs(u.user_id, undefined, RegistryAddress);
       if (userContract === nullAddress)
-        throw new Error('用户未注册, 请先完成注册')
-      user.res = userContract
+        throw new Error('用户未注册, 请先完成注册');
+      user.res = userContract;
     }
     if (type === 'asset') {
-      let asset_id = await getAssetIDBySearch()
-      const assetContract = await getContractByAssetID(asset_id, RegistryAddress)
+      let asset_id = await getAssetIDBySearch();
+      const assetContract = await getContractByAssetID(asset_id, RegistryAddress);
       if (assetContract === nullAddress)
-        throw new Error('资产未注册, 请先添加资产')
-      asset.res = assetContract
+        throw new Error('资产未注册, 请先添加资产');
+      asset.res = assetContract;
     }
-    loading.finish()
+    loading.finish();
   } catch (e: any) {
-    message.error(e.message)
-    loading.error()
+    message.error(e.message);
+    loading.error();
   }
-}
+};
 
 
 // 点击添加资产
 const clickAddAsset = async () => {
-  loading.start()
+  loading.start();
   try {
-    const asset = await getAssetIDBySearch()
+    const asset = await getAssetIDBySearch();
     const txInput = getMvmTransaction({
       asset,
       amount: '0.00000001',
       extra: '',
       trace: MixinClient.newUUID(),
-      process: RegistryProcess
-    })
+      process: RegistryProcess,
+    });
 
-    showTxCodeModal(txInput)
-    loading.finish()
+    showTxCodeModal(txInput);
+    loading.finish();
   } catch (e: any) {
-    message.error(e.message)
-    loading.error()
+    message.error(e.message);
+    loading.error();
   }
-}
-
+};
 
 
 // 获取 asset_id
 const getAssetIDBySearch = async (): Promise<string> => {
   try {
-    parse(asset.search)
-    return asset.search
+    parse(asset.search);
+    return asset.search;
   } catch (e) {
-    const t = await searchNetworkAsset(asset.search)
+    const t = await searchNetworkAsset(asset.search);
     if (t.length === 0)
-      throw new Error('资产未搜索到...请重新输入')
-    return t[0].asset_id
+      throw new Error('资产未搜索到...请重新输入');
+    return t[0].asset_id;
   }
-}
+};
 
 
 // -------- 二维码相关
-const showTxCode = ref(false)
-const tx = ref<TransactionInput>()
+const showTxCode = ref(false);
+const tx = ref<TransactionInput>();
+
 function showTxCodeModal(_tx: TransactionInput) {
-  tx.value = _tx
-  showTxCode.value = true
+  tx.value = _tx;
+  showTxCode.value = true;
 }
 
 function closeTxCode() {
-  showTxCode.value = false
+  showTxCode.value = false;
 }
 </script>

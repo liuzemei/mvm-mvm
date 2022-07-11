@@ -1,4 +1,3 @@
-
 <template>
   <div class="space">
     <n-button @click="clickClean">清空</n-button>
@@ -31,90 +30,91 @@
 </template>
 
 <script setup lang="ts">
-import { NInput, NButton, NSelect, NInputGroup, useLoadingBar } from 'naive-ui'
-import { computed, onMounted, ref, watch } from 'vue'
-import { RegistryABI, RegistryAddress, MVMRouterABI, MVMRouterAddress, CNBAddress } from '@/assets/statistic'
-import { ABI } from '@/types'
+import { NInput, NButton, NSelect, NInputGroup, useLoadingBar } from 'naive-ui';
+import { computed, onMounted, ref, watch } from 'vue';
+import { RegistryABI, RegistryAddress, MVMRouterABI, MVMRouterAddress, CNBAddress } from '@/assets/statistic';
+import { ABI } from '@/types';
 import { getContract } from '@/services/ethers';
-const abi = ref(JSON.stringify(MVMRouterABI))
-const contractAddress = ref(MVMRouterAddress)
-const loading = useLoadingBar()
+
+const abi = ref(JSON.stringify(MVMRouterABI));
+const contractAddress = ref(MVMRouterAddress);
+const loading = useLoadingBar();
 
 const clickFull = (type: string) => {
   if (type === 'uniswap') {
-    abi.value = JSON.stringify(MVMRouterABI)
-    contractAddress.value = MVMRouterAddress
+    abi.value = JSON.stringify(MVMRouterABI);
+    contractAddress.value = MVMRouterAddress;
   }
   if (type === 'registry') {
-    abi.value = JSON.stringify(RegistryABI)
-    contractAddress.value = RegistryAddress
+    abi.value = JSON.stringify(RegistryABI);
+    contractAddress.value = RegistryAddress;
   }
-}
+};
 
 const clickClean = () => {
-  abi.value = ''
-  contractAddress.value = ''
-}
+  abi.value = '';
+  contractAddress.value = '';
+};
 
 const clickFill = () => {
-  selectItem.value[0].value = CNBAddress
-  selectItem.value[1].value = "0"
-}
+  selectItem.value[0].value = CNBAddress;
+  selectItem.value[1].value = '0';
+};
 
-const selectFunc = ref('')
-const selectList = computed<{ label: string, value: string }[]>(() => {
+const selectFunc = ref('');
+const selectList = computed<{ label: string, value: string; }[]>(() => {
   if (!abi.value) {
-    selectFunc.value = ''
-    return []
+    selectFunc.value = '';
+    return [];
   }
-  const list: any = []
-  const abiArr: ABI[] = JSON.parse(abi.value)
+  const list: any = [];
+  const abiArr: ABI[] = JSON.parse(abi.value);
   abiArr.forEach(item => {
     if (item.type === 'function') {
       list.push({
         label: item.name,
-        value: item.name
-      })
+        value: item.name,
+      });
     }
-  })
-  selectFunc.value = list[0].value
-  return list
-})
-const selectItem = ref()
+  });
+  selectFunc.value = list[0].value;
+  return list;
+});
+const selectItem = ref();
 watch([selectList, abi, selectFunc], (o, v) => {
-  if (!selectList.value || !abi.value) return selectItem.value = undefined
+  if (!selectList.value || !abi.value) return selectItem.value = undefined;
   else return selectItem.value = JSON.parse(abi.value)
     .find((v: any) => v.name === selectFunc.value)
-    .inputs.map((v: any) => ({ ...v, value: '' }))
-})
+    .inputs.map((v: any) => ({ ...v, value: '' }));
+});
 onMounted(() => {
-  if (!selectList.value || !abi.value) return selectItem.value = undefined
+  if (!selectList.value || !abi.value) return selectItem.value = undefined;
   else return selectItem.value = JSON.parse(abi.value)
     .find((v: any) => v.name === selectFunc.value)
-    .inputs.map((v: any) => ({ ...v, value: '' }))
-})
+    .inputs.map((v: any) => ({ ...v, value: '' }));
+});
 
 
-const res = ref("")
+const res = ref('');
 
 const clickExec = async () => {
-  loading.start()
-  const params = selectItem.value.map((v: any) => v.value)
-  let _res: any = await execContract(abi.value, contractAddress.value, selectFunc.value, params)
+  loading.start();
+  const params = selectItem.value.map((v: any) => v.value);
+  let _res: any = await execContract(abi.value, contractAddress.value, selectFunc.value, params);
   if (_res) {
     if (typeof _res === 'object') {
-      _res = JSON.stringify(_res, null, 2)
+      _res = JSON.stringify(_res, null, 2);
     }
-    res.value = _res
+    res.value = _res;
   }
-  loading.finish()
-}
+  loading.finish();
+};
 
 async function execContract(abi: string, address: string, method: string, args: any[]): Promise<string> {
-  const t = await getContract(address, abi)
+  const t = await getContract(address, abi);
   return t[method](...args, {
-    gasLimit: 10000000
-  })
+    gasLimit: 10000000,
+  });
 }
 
 </script>

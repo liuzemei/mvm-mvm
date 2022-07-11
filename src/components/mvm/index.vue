@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { NTabs, NTabPane } from 'naive-ui'
-import Brige from './brige/index.vue'
-import Mvm from './mvm/index.vue'
-import Uniswap from './uniswap/index.vue'
+import { NTabs, NTabPane } from 'naive-ui';
+import Brige from './brige/index.vue';
+import Mvm from './mvm/index.vue';
+import Uniswap from './uniswap/index.vue';
 </script>
 
 <template>

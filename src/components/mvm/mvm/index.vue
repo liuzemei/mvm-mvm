@@ -43,36 +43,37 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue';
-import Qrcode from '@/components/qrcode.vue'
-import { NInput, NButton, NAlert, NSwitch, NRow } from 'naive-ui'
+import Qrcode from '@/components/qrcode.vue';
+import { NInput, NButton, NAlert, NSwitch, NRow } from 'naive-ui';
 import { extraGenerateByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
 import { MixinClient } from '@/services/mixin';
-import { testParams, testInput } from './testData'
+import { testParams, testInput } from './testData';
 import { RegistryProcess, RegistryAddress } from '@/assets/statistic';
-const process = ref(RegistryProcess)
 
-const showQrcode = ref(false)
-const tx = ref<TransactionInput>()
+const process = ref(RegistryProcess);
+
+const showQrcode = ref(false);
+const tx = ref<TransactionInput>();
 
 const emptyExtra = {
   address: '',
   method_name: '',
   method_type: '',
   params: '',
-}
+};
 
-const extraGen = ref(emptyExtra)
-const extraRes = ref('')
-const isDelegatecall = ref(false)
-const isGenerate = ref(false)
+const extraGen = ref(emptyExtra);
+const extraRes = ref('');
+const isDelegatecall = ref(false);
+const isGenerate = ref(false);
 const clickGenerateExtra = async () => {
-  isGenerate.value = true
-  let { address, method_name, method_type, params } = extraGen.value
-  let op = 0
+  isGenerate.value = true;
+  let { address, method_name, method_type, params } = extraGen.value;
+  let op = 0;
   if (isDelegatecall.value) {
-    op = 2
+    op = 2;
   }
-  if (address.startsWith('0x')) address = address.slice(2)
+  if (address.startsWith('0x')) address = address.slice(2);
   extraRes.value = await extraGenerateByInfo({
     contractAddress: address,
     methodName: method_name,
@@ -81,29 +82,29 @@ const clickGenerateExtra = async () => {
     options: {
       uploadkey: '123',
       delegatecall: isDelegatecall.value,
-    }
-  })
-  isGenerate.value = false
-}
+    },
+  });
+  isGenerate.value = false;
+};
 
 
 const emptyInput = {
   asset: '',
   amount: '',
-  extra: ''
-}
+  extra: '',
+};
 
-const txInput = ref(emptyInput)
+const txInput = ref(emptyInput);
 
 const clickGenerateTxInput = () => {
-  const { asset, amount, extra } = txInput.value
+  const { asset, amount, extra } = txInput.value;
   tx.value = getMvmTransaction({
     asset, amount, extra,
     trace: MixinClient.newUUID(),
-    process: process.value
-  })
-  showQrcode.value = true
-}
+    process: process.value,
+  });
+  showQrcode.value = true;
+};
 
 
 </script>

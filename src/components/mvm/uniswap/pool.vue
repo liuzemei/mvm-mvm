@@ -23,69 +23,69 @@
 
 <script setup lang="ts">
 import { onMounted, reactive, ref, watch } from 'vue';
-import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar } from 'naive-ui'
+import { NInput, NButton, NAlert, NInputGroup, NSelect, useLoadingBar } from 'naive-ui';
 import { SelectMixedOption } from 'naive-ui/lib/select/src/interface';
 import Qrcode from '@/components/qrcode.vue';
 import { paymentGenerateByInfo, extraGenerateByInfo, getMvmTransaction, TransactionInput } from 'mixin-node-sdk';
-import { getAssetIDByAddress } from 'mixin-node-sdk'
+import { getAssetIDByAddress } from 'mixin-node-sdk';
 import { MVMRouterAddress, RegistryAddress, RegistryProcess } from '@/assets/statistic';
 import { MixinClient } from '@/services/mixin';
 import { BigNumber } from 'bignumber.js';
-import { getAllTokens, getRateByAddress } from './tools'
+import { getAllTokens, getRateByAddress } from './tools';
 
-const loading = useLoadingBar()
+const loading = useLoadingBar();
 
 const liquidityForm = reactive({
   tokenA: '请选择 tokenA',
   amountA: '',
   tokenB: '请选择 tokenB',
   amountB: '',
-})
-const selectOptions = ref<SelectMixedOption[]>()
+});
+const selectOptions = ref<SelectMixedOption[]>();
 
 const clickAddLiquidity = async (type: 'A' | 'B') => {
-  loading.start()
-  let token = liquidityForm[`token${type}`]
-  let amount = liquidityForm[`amount${type}`]
-  const asset = await getAssetIDByAddress(token, RegistryAddress)
+  loading.start();
+  let token = liquidityForm[`token${type}`];
+  let amount = liquidityForm[`amount${type}`];
+  const asset = await getAssetIDByAddress(token, RegistryAddress);
   const extra = await extraGenerateByInfo({
     contractAddress: MVMRouterAddress,
     methodName: 'addLiquidity',
     types: ['address', 'uint256'],
     values: [token, new BigNumber(amount).times(1e8).toString()],
-  })
+  });
   tx.value = getMvmTransaction({
     asset,
     amount,
     extra,
     trace: MixinClient.newUUID(),
     process: RegistryProcess,
-  })
-  showQrcode.value = true
-  loading.finish()
-}
+  });
+  showQrcode.value = true;
+  loading.finish();
+};
 
 onMounted(async () => {
-  const allTokens = await getAllTokens()
+  const allTokens = await getAllTokens();
 
   selectOptions.value = Object.values(allTokens).map(token => ({
     label: token.symbol!,
     value: token.address!,
-  }))
-})
+  }));
+});
 
-const rate = ref(0)
+const rate = ref(0);
 watch(liquidityForm, async (n, o) => {
-  const { tokenA, tokenB, amountA } = liquidityForm
-  if (tokenA.startsWith('请选择') || tokenB.startsWith('请选择') || tokenA === tokenB) return
-  const _rate = await getRateByAddress(tokenA, tokenB)
-  rate.value = _rate
+  const { tokenA, tokenB, amountA } = liquidityForm;
+  if (tokenA.startsWith('请选择') || tokenB.startsWith('请选择') || tokenA === tokenB) return;
+  const _rate = await getRateByAddress(tokenA, tokenB);
+  rate.value = _rate;
   if (_rate && amountA) {
-    liquidityForm.amountB = new BigNumber(amountA).times(_rate).toFixed(8)
+    liquidityForm.amountB = new BigNumber(amountA).times(_rate).toFixed(8);
   }
-}, { immediate: true })
+}, { immediate: true });
 
 
-const showQrcode = ref(false)
-const tx = ref<TransactionInput>()
+const showQrcode = ref(false);
+const tx = ref<TransactionInput>();
 </script>
